@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-// import { increment, doubleAsync } from '../modules/counter'
+import { setUserDataValue } from '../../../actions/user'
 
 import Register from '../components/RegisterForm'
 
@@ -10,10 +10,13 @@ import Register from '../components/RegisterForm'
 const mapDispatchToProps = {
   // increment : () => increment(1),
   // doubleAsync
+  setUserDataValue : (property, value) => setUserDataValue(property, value),
 }
 
 const mapStateToProps = (state) => ({
-  // counter : state.counter
+  username : state.get('username'),
+  email    : state.get('email'),
+  password : state.get('password'),
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

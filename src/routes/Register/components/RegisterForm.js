@@ -23,6 +23,7 @@ class Register extends React.Component {
             type="text"
             label="Text"
             placeholder="Enter username"
+            onChange={(e) => {this.props.setUserDataValue('username', e.value)}}
           />
           <FieldGroup
             id="formControlsEmail"
