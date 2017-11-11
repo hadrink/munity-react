@@ -2,10 +2,13 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import createStore from './store/createStore'
 import './styles/main.scss'
+import APIClient from './APIClient'
+
+const apiClient = new APIClient()
 
 // Store Initialization
 // ------------------------------------
-const store = createStore(window.__INITIAL_STATE__)
+const store = createStore(window.__INITIAL_STATE__, apiClient)
 
 // Render Setup
 // ------------------------------------

@@ -5,11 +5,11 @@ import makeRootReducer from './reducers'
 import { updateLocation } from './location'
 import { Map } from 'immutable'
 
-const createStore = (initialState = Map()) => {
+const createStore = (initialState = Map(), apiClient) => {
   // ======================================================
   // Middleware Configuration
   // ======================================================
-  const middleware = [thunk]
+  const middleware = [thunk.withExtraArgument(apiClient)]
 
   // ======================================================
   // Store Enhancers
@@ -34,7 +34,7 @@ const createStore = (initialState = Map()) => {
       ...enhancers
     )
   )
-  store.asyncReducers = Map()
+  store.asyncReducers = {}
 
   // To unsubscribe, invoke `store.unsubscribeHistory()` anytime
   store.unsubscribeHistory = browserHistory.listen(updateLocation(store))

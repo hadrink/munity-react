@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-import { setUserDataValue } from '../../../actions/user'
+import { setUserDataValue} from '../../../actions/user'
+import { registerThunk } from '../../../thunks/user'
 
 import Register from '../components/RegisterForm'
 
@@ -8,9 +9,8 @@ import Register from '../components/RegisterForm'
     implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = {
-  // increment : () => increment(1),
-  // doubleAsync
   setUserDataValue : (property, value) => setUserDataValue(property, value),
+  register: (username, email, password) => registerThunk(username, email, password),
 }
 
 const mapStateToProps = (state) => ({

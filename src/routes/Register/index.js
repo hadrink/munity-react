@@ -12,8 +12,8 @@ export default (store) => ({
       const Register = require('./containers/RegisterContainer').default
       const reducer = require('./reducers/register').default
 
-      /*  Add the reducer to the store on key 'counter'  */
-      injectReducer(store, reducer)
+      /*  Add the reducer to the store on key 'register'  */
+      injectReducer(store, {key: 'register', reducer})
 
       /*  Return getComponent   */
       cb(null, Register)
