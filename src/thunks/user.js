@@ -2,6 +2,7 @@ import {
   register,
   registerSuccess,
   registerFailure,
+  setToken,
 } from '../actions/user'
 
 export function registerThunk(username, email, password) {
@@ -11,10 +12,14 @@ export function registerThunk(username, email, password) {
 
       dispatch(register)
 
-      console.log(apiClient)
       apiClient.register({username, email, password})
-        .then(user => {
+        .then(data => {
+          const jsonData = JSON.parse(data)
+          const token = jsonData['access_token']
+          const user = jsonData['user']
+
           dispatch(registerSuccess(user))
+          dispatch(setToken(token))
           resolve()
         })
         .catch((e) => {

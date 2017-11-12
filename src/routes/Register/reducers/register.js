@@ -12,7 +12,7 @@ const initialState = () => {
     username: '',
     email: '',
     password: '',
-    newUser: Map(),
+    newUser: '',
   });
 }
 
@@ -24,7 +24,7 @@ export default (state = initialState(), action) => {
     case REGISTER:
       return state.set('isSending', true)
     case REGISTER_SUCCESS:
-      return state.set('isSending', false).set('newUser', Map(action.data))
+      return state.set('isSending', false).set('newUser', action.user)
     case REGISTER_FAILURE:
       return state.set('isSending', false)
   }
