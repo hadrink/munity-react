@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, FormGroup, Form, ControlLabel, FormControl } from 'react-bootstrap'
+//import { Button, FormGroup, Form, ControlLabel, FormControl } from 'react-bootstrap'
 
 const FieldGroup = ({ id, label, help, ...props }) => {
   return (
@@ -24,27 +24,27 @@ class Register extends React.Component {
     password: '',
   }
 
-  handleUsernameChange = (event) => {
-    this.setState({username: event.target.value})
-  }
+  // handleUsernameChange = (event) => {
+  //   this.setState({username: event.target.value})
+  // }
 
-  handleEmailChange = (event) => {
-    this.setState({email: event.target.value})
-  }
+  // handleEmailChange = (event) => {
+  //   this.setState({email: event.target.value})
+  // }
 
-  handlePasswordChange = (event) => {
-    this.setState({password: event.target.value})
-  }
+  // handlePasswordChange = (event) => {
+  //   this.setState({password: event.target.value})
+  // }
 
-  handleSubmit = () => {
-    console.log(this.state.usernme)
-    this.props.register(this.state.username, this.state.email, this.state.password)
-  }
+  // handleSubmit = () => {
+  //   console.log(this.state.usernme)
+  //   this.props.register(this.state.username, this.state.email, this.state.password)
+  // }
 
   render() {
     return (
       <div>
-        <form>
+        {/* <form>
           <FieldGroup
             id="formControlsText"
             type="text"
@@ -68,7 +68,7 @@ class Register extends React.Component {
           <Button type="button" onClick={this.handleSubmit}>
             Submit
           </Button>
-        </form>|
+        </form>| */}
       </div>
     )
   }
