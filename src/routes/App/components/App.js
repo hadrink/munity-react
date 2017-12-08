@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import { Menu, Input, Icon, Button, Comment, Form } from 'semantic-ui-react'
 
 class App extends React.Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
   }
 
@@ -12,7 +11,7 @@ class App extends React.Component {
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
-  render() {
+  render () {
     const { activeItem } = this.state
 
     return (
