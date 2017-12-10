@@ -13,7 +13,7 @@ export function registerThunk (username, email, password) {
     return new Promise((resolve, reject) => {
       const state = getState()
 
-      dispatch(register)
+      dispatch(register())
 
       apiClient.register({ username, email, password })
         .then(data => {
@@ -37,7 +37,7 @@ export function registerThunk (username, email, password) {
 export function loginThunk (username, password) {
   return (dispatch, getState, apiClient) => {
     return new Promise((resolve, reject) => {
-      dispatch(login)
+      dispatch(login())
 
       apiClient.login({ username, password })
         .then(data => {

@@ -8,11 +8,9 @@ export const makeRootReducer = (asyncReducers) => {
   )
 }
 
-export const injectReducer = (store, { key, reducer }) => {
-  if (Object.hasOwnProperty.call(store.asyncReducers, key)) return
-
+export const injectReducer = (store, reducer) => {
   store.asyncReducers['context'] = contextReducer
-  store.asyncReducers[key] = reducer
+  Object.assign(store.asyncReducers, reducer)
   store.replaceReducer(makeRootReducer(store.asyncReducers))
 }
 

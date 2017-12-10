@@ -9,10 +9,16 @@ export default (store) => ({
       /*  Webpack - use require callback to define
           dependencies for bundling   */
       const App = require('./containers/AppContainer').default
-      const reducer = require('./reducers/app').default
+      const appReducer = require('./reducers/app').default
+      const loginRegisterReducer = require('./reducers/loginRegister').default
 
       /*  Add the reducer to the store on key 'register'  */
-      injectReducer(store, {key: 'app', reducer})
+      const reducer = {
+        app: appReducer,
+        loginRegister: loginRegisterReducer,
+      }
+
+      injectReducer(store, reducer)
 
       /*  Return getComponent   */
       cb(null, App)

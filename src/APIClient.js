@@ -25,7 +25,7 @@ export default class APIClient {
         headers,
         method: 'POST',
         mode: 'cors',
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, email, password }),
       })
       .then((response) => {
         if (response.ok) {
