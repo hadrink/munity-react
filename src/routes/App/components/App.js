@@ -36,9 +36,9 @@ class App extends React.Component {
     const { activeItem } = this.state
 
     return (
-      <div style={{ position: 'relative', height: '100%' }}>
+      <div className={'munity-app'} style={{ position: 'relative', height: '100%' }}>
         <div style={{ float: 'left', height: '100%' }}>
-          <Menu size='large' pointing secondary vertical style={{ height: '100%', position: 'relative' }}>
+          <Menu className={'munity-menu' } size='large' pointing secondary vertical style={{ height: '100%', position: 'relative' }}>
             <Menu.Item header>Trends</Menu.Item>
             <Menu.Item>
               <Input icon='search' placeholder='Search a community...' />

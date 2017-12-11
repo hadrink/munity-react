@@ -1,10 +1,41 @@
 @import 'base';
 @import '~semantic-ui-css/semantic.min.css';
 
+
 // Some best-practice CSS that's useful for most apps
 // Just remove them if they're not what you want
+
+$red-color: #DE6262;
+
 html {
   box-sizing: border-box;
+}
+
+.munity-app {
+
+}
+
+.munity-menu.menu.vertical {
+  background-color: $red-color;
+}
+
+.munity-menu.ui.secondary.vertical.pointing.menu {
+  border-right-width: 5px;
+  border-right-color: rgba(255,255,255,.25);
+}
+
+.munity-menu.ui.secondary.vertical.menu .item {
+  color: white !important;
+  margin: 0 -5px 0 0;
+}
+
+.munity-menu.ui.secondary.vertical.menu .item.active {
+  border-color: white;
+  border-right-width: 5px;
+}
+
+.munity-menu .button {
+  background-color: white;
 }
 
 html,
