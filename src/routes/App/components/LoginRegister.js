@@ -13,11 +13,15 @@ class LoginRegister extends React.Component {
       username: '',
       email: '',
       password: '',
-    }
+    },
   }
 
   handleLoginSubmit = () => {
-    this.props.login(this.state.login.username, this.state.login.password)
+    const login = this.state.login
+    if (!login.username || !login.password) {
+      return
+    }
+    this.props.login(login.username, login.password)
   }
 
   handleRegisterSubmit = () => {
@@ -30,6 +34,16 @@ class LoginRegister extends React.Component {
     this.setState({ [stateKey]: stateToUpdate })
   }
 
+  loginFormIsInvalid = () => {
+    const login = this.state.login
+    return !login.username || !login.password
+  }
+
+  registerFormIsInvalid = () => {
+    const register = this.state.register
+    return (!register.username || !register.email || !register.password)
+  }
+
   render () {
     return (
       <Grid columns={2} divided verticalAlign='top'>
@@ -39,12 +53,13 @@ class LoginRegister extends React.Component {
             <Form>
               <Form.Input
                 placeholder='Username'
-                onChange={(e) => { this.inputOnChange('login', 'username', e.target.value) }} />
+                onChange={(e) => { this.inputOnChange('login', 'username', e.target.value) }}
+              />
               <Form.Input
                 placeholder='Password'
                 type='password'
                 onChange={(e) => { this.inputOnChange('login', 'password', e.target.value) }} />
-              <Button loading={this.props.loading} type='submit' onClick={() => { this.handleLoginSubmit() }}>Submit</Button>
+              <Button disabled={this.loginFormIsInvalid()} loading={this.props.loading} type='submit' onClick={() => { this.handleLoginSubmit() }}>Submit</Button>
             </Form>
           </Grid.Column>
           <Grid.Column>
@@ -57,14 +72,14 @@ class LoginRegister extends React.Component {
               <Form.Input
                 placeholder='email'
                 type='email'
-                onChange={(e) => { this.inputOnChange('register', 'username', e.target.value) }}
+                onChange={(e) => { this.inputOnChange('register', 'email', e.target.value) }}
               />
               <Form.Input
                 placeholder='Password'
                 type='password'
                 onChange={(e) => { this.inputOnChange('register', 'password', e.target.value) }}
               />
-              <Button type='submit' onClick={() => { this.handleRegisterSubmit() }}>Submit</Button>
+              <Button disabled={this.registerFormIsInvalid()} type='submit' onClick={() => { this.handleRegisterSubmit() }}>Submit</Button>
             </Form>
           </Grid.Column>
         </Grid.Row>

@@ -25,7 +25,6 @@ class App extends React.Component {
   )
 
   openLoginModal = () => {
-    console.log('open')
     this.setState({ 'showLoginModal': true })
   }
 
