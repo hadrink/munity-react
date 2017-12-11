@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { registerThunk, loginThunk } from '../../../thunks/user'
+import { resetLoginRegister } from '../../../actions/user'
 
 import LoginRegister from '../components/LoginRegister'
 
@@ -10,11 +11,13 @@ import LoginRegister from '../components/LoginRegister'
 const mapDispatchToProps = {
   register: (username, email, password) => registerThunk(username, email, password),
   login: (username, password) => loginThunk(username, password),
+  reset: () => resetLoginRegister()
 }
 
 const mapStateToProps = (state) => ({
   loading: state.getIn(['loginRegister', 'loading']),
   user: state.getIn(['loginRegister', 'user']),
+  error: state.getIn(['loginRegister', 'error'])
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

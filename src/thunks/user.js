@@ -26,7 +26,6 @@ export function registerThunk (username, email, password) {
           resolve()
         })
         .catch((e) => {
-          console.error(e)
           dispatch(registerFailure(e))
           reject(e)
         })

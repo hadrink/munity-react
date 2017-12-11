@@ -16,7 +16,7 @@ class App extends React.Component {
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   LoginModal = () => (
-    <Modal open={this.state.showLoginModal} onClose={() => { this.closeLoginModal() }}>
+    <Modal open={this.state.showLoginModal && !this.props.token} onClose={() => { this.closeLoginModal() }}>
       <Modal.Header>Login / Register</Modal.Header>
       <Modal.Content>
         <LoginRegister />
@@ -51,7 +51,7 @@ class App extends React.Component {
             <Menu.Item name='your2' active={activeItem === 'your2'} onClick={this.handleItemClick} />
             <Menu.Item name='your3' active={activeItem === 'your3'} onClick={this.handleItemClick} />
             <div style={{ position: 'absolute', width: '100%', padding: '10px', bottom: 0 }}>
-              <Button style={{ width: '100%' }} onClick={() => { this.openLoginModal() }}>Login</Button>
+              <Button disabled={this.props.token} style={{ width: '100%' }} onClick={() => { this.openLoginModal() }}>Login</Button>
             </div>
           </Menu>
         </div>

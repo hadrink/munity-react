@@ -14,9 +14,7 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state) => ({
-  username : state.get('username'),
-  email    : state.get('email'),
-  password : state.get('password'),
+  token: state.getIn(['context', 'token'])
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

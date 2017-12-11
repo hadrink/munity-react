@@ -1,9 +1,15 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Grid, Form, Button } from 'semantic-ui-react'
+import { Grid, Form, Button, Message } from 'semantic-ui-react'
 
 class LoginRegister extends React.Component {
+  constructor (props) {
+    super(props)
+
+    props.reset()
+  }
+
   state = {
     login: {
       username: '',
@@ -46,44 +52,48 @@ class LoginRegister extends React.Component {
 
   render () {
     return (
-      <Grid columns={2} divided verticalAlign='top'>
-        <Grid.Row stretched>
-          <Grid.Column>
-            <h3>Login</h3>
-            <Form>
-              <Form.Input
-                placeholder='Username'
-                onChange={(e) => { this.inputOnChange('login', 'username', e.target.value) }}
-              />
-              <Form.Input
-                placeholder='Password'
-                type='password'
-                onChange={(e) => { this.inputOnChange('login', 'password', e.target.value) }} />
-              <Button disabled={this.loginFormIsInvalid()} loading={this.props.loading} type='submit' onClick={() => { this.handleLoginSubmit() }}>Submit</Button>
-            </Form>
-          </Grid.Column>
-          <Grid.Column>
-            <h3>Register</h3>
-            <Form>
-              <Form.Input
-                placeholder='Username'
-                onChange={(e) => { this.inputOnChange('register', 'username', e.target.value) }}
-              />
-              <Form.Input
-                placeholder='email'
-                type='email'
-                onChange={(e) => { this.inputOnChange('register', 'email', e.target.value) }}
-              />
-              <Form.Input
-                placeholder='Password'
-                type='password'
-                onChange={(e) => { this.inputOnChange('register', 'password', e.target.value) }}
-              />
-              <Button disabled={this.registerFormIsInvalid()} type='submit' onClick={() => { this.handleRegisterSubmit() }}>Submit</Button>
-            </Form>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <div>
+        <Message hidden={!this.props.error.reason} color='red'>{this.props.error.reason}</Message>
+        <Grid columns={2} divided verticalAlign='top'>
+          <Grid.Row stretched>
+            <Grid.Column>
+              <h3>Login</h3>
+              <Form>
+                <Form.Input
+                  placeholder='Username'
+                  onChange={(e) => { this.inputOnChange('login', 'username', e.target.value) }}
+                />
+                <Form.Input
+                  placeholder='Password'
+                  type='password'
+                  onChange={(e) => { this.inputOnChange('login', 'password', e.target.value) }} />
+                <Button disabled={this.loginFormIsInvalid()} loading={this.props.loading} type='submit' onClick={() => { this.handleLoginSubmit() }}>Submit</Button>
+              </Form>
+            </Grid.Column>
+            <Grid.Column>
+              <h3>Register</h3>
+              <Form>
+                <Form.Input
+                  placeholder='Username'
+                  onChange={(e) => { this.inputOnChange('register', 'username', e.target.value) }}
+                />
+                <Form.Input
+                  placeholder='email'
+                  type='email'
+                  onChange={(e) => { this.inputOnChange('register', 'email', e.target.value) }}
+                />
+                <Form.Input
+                  placeholder='Password'
+                  type='password'
+                  onChange={(e) => { this.inputOnChange('register', 'password', e.target.value) }}
+                />
+                <Button disabled={this.registerFormIsInvalid()} type='submit' onClick={() => { this.handleRegisterSubmit() }}>Submit</Button>
+              </Form>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </div>
+
     )
   }
 }
@@ -92,6 +102,7 @@ LoginRegister.propTypes = {
   register: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  error: PropTypes.object,
 }
 
 export default LoginRegister
