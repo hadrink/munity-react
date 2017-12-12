@@ -67,7 +67,12 @@ class LoginRegister extends React.Component {
                   placeholder='Password'
                   type='password'
                   onChange={(e) => { this.inputOnChange('login', 'password', e.target.value) }} />
-                <Button disabled={this.loginFormIsInvalid()} loading={this.props.loading} type='submit' onClick={() => { this.handleLoginSubmit() }}>Submit</Button>
+                <Button
+                  disabled={this.loginFormIsInvalid()}
+                  loading={this.props.loading && !this.loginFormIsInvalid()}
+                  type='submit'
+                  onClick={() => { this.handleLoginSubmit() }}>Submit
+                </Button>
               </Form>
             </Grid.Column>
             <Grid.Column>
@@ -87,7 +92,12 @@ class LoginRegister extends React.Component {
                   type='password'
                   onChange={(e) => { this.inputOnChange('register', 'password', e.target.value) }}
                 />
-                <Button disabled={this.registerFormIsInvalid()} type='submit' onClick={() => { this.handleRegisterSubmit() }}>Submit</Button>
+                <Button
+                  disabled={this.registerFormIsInvalid()}
+                  loading={this.props.loading && !this.registerFormIsInvalid()}
+                  type='submit'
+                  onClick={() => { this.handleRegisterSubmit() }}>Submit
+                </Button>
               </Form>
             </Grid.Column>
           </Grid.Row>
