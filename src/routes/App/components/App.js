@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Input, Icon, Button, Comment, Modal } from 'semantic-ui-react'
-import LoginRegister from '../containers/LoginRegisterContainer'
+import { Input, Comment } from 'semantic-ui-react'
+import MunityMenu from '../containers/MenuContainer'
 
 class App extends React.Component {
   constructor(props) {
@@ -13,47 +13,13 @@ class App extends React.Component {
     }
   }
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
-
-  LoginModal = () => (
-    <Modal open={this.state.showLoginModal && !this.props.token} onClose={() => { this.closeLoginModal() }}>
-      <Modal.Header>Login / Register</Modal.Header>
-      <Modal.Content>
-        <LoginRegister />
-      </Modal.Content>
-    </Modal>
-  )
-
-  openLoginModal = () => {
-    this.setState({ 'showLoginModal': true })
-  }
-
-  closeLoginModal = () => {
-    this.setState({ 'showLoginModal': false })
-  }
-
   render() {
     const { activeItem } = this.state
 
     return (
       <div className={'munity-app'} style={{ position: 'relative', height: '100%' }}>
         <div style={{ float: 'left', height: '100%' }}>
-          <Menu className={'munity-menu' } size='large' pointing secondary vertical style={{ height: '100%', position: 'relative' }}>
-            <Menu.Item header>Trends</Menu.Item>
-            <Menu.Item>
-              <Input icon='search' placeholder='Search a community...' />
-            </Menu.Item>
-            <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
-            <Menu.Item name='messages' active={activeItem === 'messages'} onClick={this.handleItemClick} />
-            <Menu.Item name='friends' active={activeItem === 'friends'} onClick={this.handleItemClick} />
-            <Menu.Item header><Icon name='add circle' />Yours</Menu.Item>
-            <Menu.Item name='your1' active={activeItem === 'your1'} onClick={this.handleItemClick} />
-            <Menu.Item name='your2' active={activeItem === 'your2'} onClick={this.handleItemClick} />
-            <Menu.Item name='your3' active={activeItem === 'your3'} onClick={this.handleItemClick} />
-            <div style={{ position: 'absolute', width: '100%', padding: '10px', bottom: 0 }}>
-              <Button disabled={this.props.token} style={{ width: '100%' }} onClick={() => { this.openLoginModal() }}>Login</Button>
-            </div>
-          </Menu>
+          <MunityMenu />
         </div>
         <div style={{ float: 'left', height: '100%' }}>
           <Comment.Group style={{ position: 'relative', height: '100%' }}>
@@ -93,8 +59,6 @@ class App extends React.Component {
             />
           </Comment.Group>
         </div>
-
-        {this.LoginModal()}
       </div>
     )
   }

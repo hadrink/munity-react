@@ -64,22 +64,21 @@ export default class APIClient {
       })
     })
   }
-  getSubscriptions (token, communityName) {
+  getSubscriptions ({ token }) {
     return new Promise((resolve, reject) => {
       const baseURL = `${this.getBaseURI()}/v1/subscriptions`
       const headers = this.securedheaders(token)
 
       return fetch((baseURL), {
         headers,
-        method: 'POST',
+        method: 'GET',
         mode: 'cors',
-        body: JSON.stringify({ 'name': communityName }),
       })
       .then((response) => {
         if (response.ok) {
           response.text().then(data => resolve(data))
         } else {
-          reject(new Error(response.text(), response.status))
+          response.text().then(error => reject(JSON.parse(error)))
         }
       })
       .catch(error => {

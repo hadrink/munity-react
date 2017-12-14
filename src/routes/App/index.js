@@ -11,11 +11,13 @@ export default (store) => ({
       const App = require('./containers/AppContainer').default
       const appReducer = require('./reducers/app').default
       const loginRegisterReducer = require('./reducers/loginRegister').default
+      const communityReducer = require('./reducers/community').default
 
       /*  Add the reducer to the store on key 'register'  */
       const reducer = {
         app: appReducer,
         loginRegister: loginRegisterReducer,
+        community: communityReducer,
       }
 
       injectReducer(store, reducer)
