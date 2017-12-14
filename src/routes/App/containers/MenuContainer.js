@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { getSubscriptionsThunk } from '../../../thunks/community'
+import { logout } from '../../../actions/user'
 
 import MunityMenu from '../components/Menu'
 
@@ -9,6 +10,7 @@ import MunityMenu from '../components/Menu'
 
 const mapDispatchToProps = {
   getSubscriptions: () => getSubscriptionsThunk(),
+  logout: () => logout(),
 }
 
 const mapStateToProps = (state) => ({

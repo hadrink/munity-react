@@ -4,6 +4,7 @@ import {
   GET_SUBSCRIPTIONS_SUCCESS,
   GET_SUBSCRIPTIONS_FAILURE,
 } from '../../../actions/community'
+import { LOGOUT } from '../../../actions/user'
 
 const initialState = () => {
   return Map({
@@ -26,6 +27,8 @@ export default (state = initialState(), action) => {
       return state.set('loading', false).set('subscriptions', action.communities)
     case GET_SUBSCRIPTIONS_FAILURE:
       return state.set('loading', false).set('error', action.error)
+    case LOGOUT:
+      return initialState()
   }
 
   return state

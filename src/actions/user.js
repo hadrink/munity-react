@@ -7,6 +7,7 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
 export const SET_TOKEN = 'SET_TOKEN'
 export const RESET_LOGIN_REGISTER = 'RESET_LOGIN_REGISTER'
+export const LOGOUT = 'LOGOUT'
 
 export function setUserDataValue (property, value) {
   return {
@@ -59,5 +60,11 @@ export function setToken (token) {
 export function resetLoginRegister () {
   return {
     type: RESET_LOGIN_REGISTER
+  }
+}
+
+export function logout () {
+  return {
+    type: LOGOUT
   }
 }

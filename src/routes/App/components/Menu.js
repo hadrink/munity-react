@@ -71,7 +71,9 @@ class MunityMenu extends React.Component {
         ))}
 
         <div style={{ position: 'absolute', width: '100%', padding: '10px', bottom: 0 }}>
-          <Button disabled={this.props.token} style={{ width: '100%' }} onClick={() => { this.openLoginModal() }}>Login</Button>
+          <Button
+            style={{ width: '100%' }}
+            onClick={() => { this.props.token ? this.props.logout() : this.openLoginModal() }}>{this.props.token ? 'Logout' : 'Login'}</Button>
         </div>
 
         {this.LoginModal()}
@@ -84,7 +86,8 @@ MunityMenu.propTypes = {
   subscriptions: PropTypes.object,
   token: PropTypes.string,
   getSubscriptions: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
+  logout: PropTypes.func.isRequired,
 }
 
 export default MunityMenu
