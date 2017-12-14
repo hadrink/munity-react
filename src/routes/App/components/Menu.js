@@ -3,6 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Menu, Input, Button, Icon, Modal, Dimmer, Loader } from 'semantic-ui-react'
 import LoginRegister from '../containers/LoginRegisterContainer'
+import CreateCommunity from '../containers/CreateCommunityContainer'
 
 class MunityMenu extends React.Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class MunityMenu extends React.Component {
   state = {
     activeItem: 'home',
     showLoginModal: false,
+    showCreateCommunityModal: false,
   }
 
   LoginModal = () => (
@@ -25,7 +27,16 @@ class MunityMenu extends React.Component {
     </Modal>
   )
 
-  componentDidUpdate(prevProps) {
+  CreateCommunityModal = () => (
+    <Modal size='tiny' open={this.state.showCreateCommunityModal} onClose={() => { this.closeCreateCommunityModal() }}>
+      <Modal.Header>Create community</Modal.Header>
+      <Modal.Content>
+        <CreateCommunity />
+      </Modal.Content>
+    </Modal>
+  )
+
+  componentDidUpdate (prevProps) {
     if (this.props.token && this.state.showLoginModal) {
       this.closeLoginModal()
     }
@@ -39,8 +50,16 @@ class MunityMenu extends React.Component {
     this.setState({ 'showLoginModal': true })
   }
 
+  openCreateCommunityModal = () => {
+    this.setState({ 'showCreateCommunityModal': true })
+  }
+
   closeLoginModal = () => {
     this.setState({ 'showLoginModal': false })
+  }
+
+  closeCreateCommunityModal = () => {
+    this.setState({ 'showCreateCommunityModal': false })
   }
 
   getSubscriptionsIfNeeded = () => {
@@ -69,6 +88,7 @@ class MunityMenu extends React.Component {
         {this.props.subscriptions.toJS().map(sub => (
           <Menu.Item name={sub.name} active={activeItem === sub.name} onClick={this.handleItemClick} />
         ))}
+        <Menu.Item onClick={() => { this.openCreateCommunityModal() }} header><Icon name='add circle' />Yours</Menu.Item>
 
         <div style={{ position: 'absolute', width: '100%', padding: '10px', bottom: 0 }}>
           <Button
@@ -77,6 +97,7 @@ class MunityMenu extends React.Component {
         </div>
 
         {this.LoginModal()}
+        {this.CreateCommunityModal()}
       </Menu>
     )
   }
