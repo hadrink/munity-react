@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
-import { registerThunk, loginThunk } from '../../../thunks/user'
+import { registerThunk, loginThunk, getMyCommunitiesThunk } from '../../../thunks/user'
+import { getSubscriptionsThunk } from '../../../thunks/community'
 import { resetLoginRegister } from '../../../actions/user'
 
 import LoginRegister from '../components/LoginRegister'
@@ -8,11 +9,15 @@ import LoginRegister from '../components/LoginRegister'
     Keys will be passed as props to presentational components. Here we are
     implementing our wrapper around increment; the component doesn't care   */
 
-const mapDispatchToProps = {
+const mapDispatchToProps = (dispatch, props) => ({
   register: (username, email, password) => registerThunk(username, email, password),
-  login: (username, password) => loginThunk(username, password),
+  login: (username, password) => dispatch(loginThunk(username, password))
+  .then(() => {
+    dispatch(getSubscriptionsThunk())
+    dispatch(getMyCommunitiesThunk())
+  }),
   reset: () => resetLoginRegister()
-}
+})
 
 const mapStateToProps = (state) => ({
   loading: state.getIn(['loginRegister', 'loading']),

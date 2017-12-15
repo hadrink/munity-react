@@ -111,4 +111,27 @@ export default class APIClient {
       })
     })
   }
+  getMyCommunities ({ token }) {
+    return new Promise((resolve, reject) => {
+      const baseURL = `${this.getBaseURI()}/v1/users/communities`
+      const headers = this.securedheaders(token)
+
+      return fetch((baseURL), {
+        headers,
+        method: 'GET',
+        mode: 'cors',
+      })
+      .then((response) => {
+        if (response.ok) {
+          response.text().then(data => resolve(data))
+        } else {
+          response.text().then(error => reject(JSON.parse(error)))
+        }
+      })
+      .catch(error => {
+        console.error(error)
+        reject(error)
+      })
+    })
+  }
 }

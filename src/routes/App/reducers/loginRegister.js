@@ -1,6 +1,5 @@
 import { Map } from 'immutable'
 import {
-  SET_USER_DATA_VALUE,
   REGISTER,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
@@ -12,6 +11,7 @@ import {
 
 const initialState = () => {
   return Map({
+    token: '',
     loading: false,
     user: null,
     error: {
@@ -25,8 +25,6 @@ const initialState = () => {
 
 export default (state = initialState(), action) => {
   switch (action.type) {
-    case SET_USER_DATA_VALUE:
-      return state.set(action.property, action.value)
     case REGISTER:
       return state.set('loading', true)
     case REGISTER_SUCCESS:

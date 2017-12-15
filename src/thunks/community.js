@@ -1,4 +1,4 @@
-import { List } from 'immutable'
+import { List, Map } from 'immutable'
 import {
   getSubscriptions,
   getSubscriptionsSuccess,
@@ -40,10 +40,9 @@ export function createCommunityThunk (name) {
 
       apiClient.createCommunity({ token, name })
         .then(data => {
-          const jsonData = JSON.parse(data)
-          const community = jsonData['community']
+          const createdRecently = JSON.parse(data)
 
-          dispatch(createCommunitySuccess(community))
+          dispatch(createCommunitySuccess(Map({ createdRecently })))
           resolve()
         })
         .catch((e) => {

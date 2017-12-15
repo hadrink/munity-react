@@ -1,19 +1,18 @@
-export const SET_USER_DATA_VALUE = 'SET_USER_DATA_VALUE'
 export const REGISTER = 'REGISTER'
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS'
 export const REGISTER_FAILURE = 'REGISTER_FAILURE'
+
 export const LOGIN = 'LOGIN'
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'LOGIN_FAILURE'
+
+export const GET_MY_COMMUNITIES = 'GET_MY_COMMUNITIES'
+export const GET_MY_COMMUNITIES_SUCCESS = 'GET_MY_COMMUNITIES_SUCCESS'
+export const GET_MY_COMMUNITIES_FAILURE = 'GET_MY_COMMUNITIES_FAILURE'
+
 export const SET_TOKEN = 'SET_TOKEN'
 export const RESET_LOGIN_REGISTER = 'RESET_LOGIN_REGISTER'
 export const LOGOUT = 'LOGOUT'
-
-export function setUserDataValue (property, value) {
-  return {
-    type: SET_USER_DATA_VALUE, property, value
-  }
-}
 
 export function register () {
   return {
@@ -39,15 +38,33 @@ export function login () {
   }
 }
 
-export function loginSuccess (user) {
+export function loginSuccess (token, user) {
   return {
-    type: LOGIN_SUCCESS, user
+    type: LOGIN_SUCCESS, token, user
   }
 }
 
 export function loginFailure (error) {
   return {
     type: LOGIN_FAILURE, error
+  }
+}
+
+export function getMyCommunities () {
+  return {
+    type: GET_MY_COMMUNITIES
+  }
+}
+
+export function getMyCommunitiesSuccess (communities) {
+  return {
+    type: GET_MY_COMMUNITIES_SUCCESS, communities
+  }
+}
+
+export function getMyCommunitiesFailure (error) {
+  return {
+    type: GET_MY_COMMUNITIES_FAILURE, error
   }
 }
 

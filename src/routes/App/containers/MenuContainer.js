@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import { getSubscriptionsThunk } from '../../../thunks/community'
 import { logout } from '../../../actions/user'
 
 import MunityMenu from '../components/Menu'
@@ -9,13 +8,13 @@ import MunityMenu from '../components/Menu'
     implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = {
-  getSubscriptions: () => getSubscriptionsThunk(),
   logout: () => logout(),
 }
 
 const mapStateToProps = (state) => ({
   token: state.getIn(['context', 'token']),
   subscriptions: state.getIn(['community', 'subscriptions']),
+  myCommunities: state.getIn(['user', 'myCommunities']),
   loading: state.getIn(['community', 'loading'])
 })
 

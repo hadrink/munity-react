@@ -7,6 +7,7 @@ import {
   CREATE_COMMUNITY_SUCCESS,
   CREATE_COMMUNITY_FAILURE,
 } from '../../../actions/community'
+
 import { LOGOUT } from '../../../actions/user'
 
 const initialState = () => {
@@ -15,7 +16,6 @@ const initialState = () => {
     isCreating: false,
     subscriptions: List(),
     createdRecently: Map(),
-    mine: List(),
     error: {
       identifier: '',
       reason: '',

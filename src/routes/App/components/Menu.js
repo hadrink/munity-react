@@ -8,8 +8,6 @@ import CreateCommunity from '../containers/CreateCommunityContainer'
 class MunityMenu extends React.Component {
   constructor(props) {
     super(props)
-
-    this.getSubscriptionsIfNeeded()
   }
 
   state = {
@@ -36,13 +34,9 @@ class MunityMenu extends React.Component {
     </Modal>
   )
 
-  componentDidUpdate (prevProps) {
-    if (this.props.token && this.state.showLoginModal) {
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.token && this.state.showLoginModal) {
       this.closeLoginModal()
-    }
-
-    if (this.props.token !== prevProps.token) {
-      this.getSubscriptionsIfNeeded()
     }
   }
 
@@ -62,12 +56,6 @@ class MunityMenu extends React.Component {
     this.setState({ 'showCreateCommunityModal': false })
   }
 
-  getSubscriptionsIfNeeded = () => {
-    if (this.props.token) {
-      this.props.getSubscriptions()
-    }
-  }
-
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   render () {
@@ -84,11 +72,14 @@ class MunityMenu extends React.Component {
         <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} />
         <Menu.Item name='messages' active={activeItem === 'messages'} onClick={this.handleItemClick} />
         <Menu.Item name='friends' active={activeItem === 'friends'} onClick={this.handleItemClick} />
-        <Menu.Item style={{ display: this.props.subscriptions.count() === 0 ? 'none' : 'block' }} header><Icon name='add circle' />Subscriptions</Menu.Item>
+        <Menu.Item style={{ display: this.props.subscriptions.count() === 0 ? 'none' : 'block' }} header>Subscriptions</Menu.Item>
         {this.props.subscriptions.toJS().map(sub => (
           <Menu.Item name={sub.name} active={activeItem === sub.name} onClick={this.handleItemClick} />
         ))}
-        <Menu.Item onClick={() => { this.openCreateCommunityModal() }} header><Icon name='add circle' />Yours</Menu.Item>
+        <Menu.Item style={{ display: this.props.myCommunities.count() === 0 ? 'none' : 'block' }} onClick={() => { this.openCreateCommunityModal() }} header><Icon name='add circle' />Yours</Menu.Item>
+        {this.props.myCommunities.toJS().map(c => (
+          <Menu.Item name={c.name} active={activeItem === c.name} onClick={this.handleItemClick} />
+        ))}
 
         <div style={{ position: 'absolute', width: '100%', padding: '10px', bottom: 0 }}>
           <Button
@@ -105,8 +96,8 @@ class MunityMenu extends React.Component {
 
 MunityMenu.propTypes = {
   subscriptions: PropTypes.object,
+  myCommunities: PropTypes.object,
   token: PropTypes.string,
-  getSubscriptions: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,
 }
