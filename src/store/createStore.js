@@ -27,7 +27,6 @@ const createStore = (initialState = Map(), apiClient) => {
   // Store Instantiation and HMR Setup
   // ======================================================
   const store = createReduxStore(
-    makeRootReducer,
     initialState,
     composeEnhancers(
       applyMiddleware(...middleware),

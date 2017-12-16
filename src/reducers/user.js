@@ -4,7 +4,7 @@ import {
   GET_MY_COMMUNITIES_SUCCESS,
   GET_MY_COMMUNITIES_FAILURE,
   LOGOUT,
-} from '../../../actions/user'
+} from '../actions/user'
 
 const initialState = () => {
   return Map({

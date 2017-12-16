@@ -7,7 +7,7 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   RESET_LOGIN_REGISTER,
-} from '../../../actions/user'
+} from '../actions/user'
 
 const initialState = () => {
   return Map({

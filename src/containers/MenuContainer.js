@@ -1,18 +1,21 @@
 import { connect } from 'react-redux'
-import { registerThunk } from '../../../thunks/user'
+import { logout } from '../actions/user'
 
-import App from '../components/App'
+import MunityMenu from '../components/Menu'
 
 /*  Object of action creators (can also be function that returns object).
     Keys will be passed as props to presentational components. Here we are
     implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = {
-  register: (username, email, password) => registerThunk(username, email, password),
+  logout: () => logout(),
 }
 
 const mapStateToProps = (state) => ({
-  token: state.getIn(['context', 'token'])
+  token: state.getIn(['context', 'token']),
+  subscriptions: state.getIn(['community', 'subscriptions']),
+  myCommunities: state.getIn(['user', 'myCommunities']),
+  loading: state.getIn(['community', 'loading'])
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
@@ -29,4 +32,4 @@ const mapStateToProps = (state) => ({
     Selectors are composable. They can be used as input to other selectors.
     https://github.com/reactjs/reselect    */
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(MunityMenu)

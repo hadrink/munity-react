@@ -3,23 +3,24 @@ import ReactDOM from 'react-dom'
 import createStore from './store/createStore'
 import './styles/main.scss'
 import APIClient from './APIClient'
+import rootReducer from './reducers'
 
 const apiClient = new APIClient()
 
 // Store Initialization
 // ------------------------------------
-const store = createStore(window.__INITIAL_STATE__, apiClient)
+const store = createStore(rootReducer, apiClient)
 
 // Render Setup
 // ------------------------------------
 const MOUNT_NODE = document.getElementById('root')
 
 let render = () => {
-  const App = require('./components/App').default
-  const routes = require('./routes/index').default(store)
+  const Root = require('./components/Root').default
+  // const routes = require('./routes/index').default(store)
 
   ReactDOM.render(
-    <App store={store} routes={routes} />,
+    <Root store={store} />,
     MOUNT_NODE
   )
 }
@@ -46,8 +47,7 @@ if (__DEV__) {
 
     // Setup hot module replacement
     module.hot.accept([
-      './components/App',
-      './routes/index',
+      './components/Root',
     ], () =>
       setImmediate(() => {
         ReactDOM.unmountComponentAtNode(MOUNT_NODE)

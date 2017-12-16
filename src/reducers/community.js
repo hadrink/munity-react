@@ -6,9 +6,9 @@ import {
   CREATE_COMMUNITY,
   CREATE_COMMUNITY_SUCCESS,
   CREATE_COMMUNITY_FAILURE,
-} from '../../../actions/community'
+} from '../actions/community'
 
-import { LOGOUT } from '../../../actions/user'
+import { LOGOUT } from '../actions/user'
 
 const initialState = () => {
   return Map({

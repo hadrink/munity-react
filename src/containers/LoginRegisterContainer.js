@@ -1,20 +1,28 @@
 import { connect } from 'react-redux'
-import { registerThunk } from '../../../thunks/user'
+import { registerThunk, loginThunk, getMyCommunitiesThunk } from '../thunks/user'
+import { getSubscriptionsThunk } from '../thunks/community'
+import { resetLoginRegister } from '../actions/user'
 
-import Register from '../components/RegisterForm'
+import LoginRegister from '../components/LoginRegister'
 
 /*  Object of action creators (can also be function that returns object).
     Keys will be passed as props to presentational components. Here we are
     implementing our wrapper around increment; the component doesn't care   */
 
-const mapDispatchToProps = {
+const mapDispatchToProps = (dispatch, props) => ({
   register: (username, email, password) => registerThunk(username, email, password),
-}
+  login: (username, password) => dispatch(loginThunk(username, password))
+  .then(() => {
+    dispatch(getSubscriptionsThunk())
+    dispatch(getMyCommunitiesThunk())
+  }),
+  reset: () => resetLoginRegister()
+})
 
 const mapStateToProps = (state) => ({
-  username : state.get('username'),
-  email    : state.get('email'),
-  password : state.get('password'),
+  loading: state.getIn(['loginRegister', 'loading']),
+  user: state.getIn(['loginRegister', 'user']),
+  error: state.getIn(['loginRegister', 'error'])
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
@@ -31,4 +39,4 @@ const mapStateToProps = (state) => ({
     Selectors are composable. They can be used as input to other selectors.
     https://github.com/reactjs/reselect    */
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginRegister)

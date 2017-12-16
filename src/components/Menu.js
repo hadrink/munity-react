@@ -61,7 +61,7 @@ class MunityMenu extends React.Component {
   render () {
     const { activeItem } = this.state
     return (
-      <Menu defaultActiveIndex={0} className={'munity-menu'} size='large' pointing secondary vertical style={{ height: '100%', position: 'relative' }}>
+      <Menu scrolling fixed='left' defaultActiveIndex={0} className={'munity-menu'} size='large' pointing secondary vertical>
         <Dimmer active={this.props.loading}>
           <Loader active={this.props.loading} />
         </Dimmer>
