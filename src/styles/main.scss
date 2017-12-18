@@ -15,8 +15,12 @@ html {
 
 }
 
-.munity-menu.menu.vertical {
+.ui.inverted.menu {
   background-color: $red-color;
+
+  .button {
+    background-color: white;
+  }
 }
 
 .munity-menu.ui.secondary.vertical.pointing.menu {
@@ -32,10 +36,6 @@ html {
 .munity-menu.ui.secondary.vertical.menu .item.active {
   border-color: white;
   border-right-width: 5px;
-}
-
-.munity-menu .button {
-  background-color: white;
 }
 
 html,
