@@ -1,10 +1,11 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Input, Button, Icon, Modal, Dimmer, Loader, Sidebar, Segment, Header, Comment, Item } from 'semantic-ui-react'
+import { Menu, Input, Button, Icon, Modal, Dimmer, Loader, Sidebar, Segment, Header, Item, Grid } from 'semantic-ui-react'
 import { Link } from 'react-router'
 import LoginRegister from '../containers/LoginRegisterContainer'
 import CreateCommunity from '../containers/CreateCommunityContainer'
+import MunityChat from '../containers/MunityChatContainer'
 
 class MunityMenu extends React.Component {
   constructor(props) {
@@ -88,13 +89,13 @@ class MunityMenu extends React.Component {
                   active={activeItem === sub.name}
                   onClick={this.handleItemClick}
                 >
-                {sub.name.charAt(0).toUpperCase() + sub.name.slice(1)}
+                  {sub.name.charAt(0).toUpperCase() + sub.name.slice(1)}
                 </Menu.Item>
               ))}
             </div>
           </Item>
           <Item style={{ display: this.props.myCommunities.count() === 0 ? 'none' : 'block' }}>
-            <Link className='header' to='/#create-community' onClick={ () => this.openCreateCommunityModal() }>Yours <Icon name='add circle' /></Link>
+            <Link className='header' to='/#create-community' onClick={() => this.openCreateCommunityModal()}>Yours <Icon name='add circle' /></Link>
             <div className='menu'>
               {this.props.myCommunities.toJS().map(c => (
                 <Menu.Item
@@ -104,7 +105,7 @@ class MunityMenu extends React.Component {
                   active={activeItem === c.name}
                   onClick={this.handleItemClick}
                 >
-                {c.name.charAt(0).toUpperCase() + c.name.slice(1)}
+                  {c.name.charAt(0).toUpperCase() + c.name.slice(1)}
                 </Menu.Item>
               ))}
             </div>
@@ -119,49 +120,20 @@ class MunityMenu extends React.Component {
           {this.CreateCommunityModal()}
 
         </Sidebar>
-        <Sidebar.Pusher>
-          <Segment basic>
-            <Header as='h3'>Application Content</Header>
-            <Comment.Group style={{ position: 'relative', height: '100%' }}>
-              <Comment>
-                <Comment.Avatar as='a' src='/assets/images/avatar/small/joe.jpg' />
-                <Comment.Content>
-                  <Comment.Author>Joe Henderson</Comment.Author>
-                  <Comment.Metadata>
-                    <div>1 day ago</div>
-                  </Comment.Metadata>
-                  <Comment.Text>
-                    <p>The hours, minutes and seconds stand as visible reminders that your effort put them all there.</p>
-                    <p>Preserve until your next run, when the watch lets you see how Impermanent your efforts are.</p>
-                  </Comment.Text>
-                  <Comment.Actions>
-                    <Comment.Action>Reply</Comment.Action>
-                  </Comment.Actions>
-                </Comment.Content>
-              </Comment>
-
-              <Comment>
-                <Comment.Avatar as='a' src='/assets/images/avatar/small/christian.jpg' />
-                <Comment.Content>
-                  <Comment.Author>Christian Rocha</Comment.Author>
-                  <Comment.Metadata>
-                    <div>2 days ago</div>
-                  </Comment.Metadata>
-                  <Comment.Text>I re-tweeted this.</Comment.Text>
-                  <Comment.Actions>
-                    <Comment.Action>Reply</Comment.Action>
-                  </Comment.Actions>
-                </Comment.Content>
-              </Comment>
-              <Input style={{ position: 'absolute', width: '100%', bottom: 0 }}
-                action={{ color: 'red', labelPosition: 'right', icon: 'copy', content: 'Send' }}
-                placeholder='Send a message...'
-              />
-            </Comment.Group>
-          </Segment>
+        <Sidebar.Pusher style={{height: '100%'}}>
+          <Grid columns={2} divided style={{margin: 0, height: '100%'}}>
+            <Grid.Row>
+              <Grid.Column width={10}>
+                <MunityChat />
+              </Grid.Column>
+              <Grid.Column width={6}>
+                <MunityChat />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </Sidebar.Pusher>
       </Sidebar.Pushable>
-    )
+        )
   }
 }
 
