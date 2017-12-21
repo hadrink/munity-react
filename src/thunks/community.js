@@ -6,6 +6,10 @@ import {
   createCommunity,
   createCommunitySuccess,
   createCommunityFailure,
+  sendMessage,
+  openSocketConnection,
+  openSocketConnectionSuccess,
+  openSocketConnectionFailure,
 } from '../actions/community'
 
 export function getSubscriptionsThunk () {
@@ -49,6 +53,39 @@ export function createCommunityThunk (name) {
           dispatch(createCommunityFailure(e))
           reject(e)
         })
+    })
+  }
+}
+
+export function sendMessageThunk (communityName, username) {
+  return (dispatch, getState, apiClient) => {
+    return new Promise((resolve, reject) => {
+      const state = getState()
+      const token = state.getIn(['context', 'token'])
+      dispatch(sendMessage())
+
+
+
+      apiClient.sendMessage({ communityName, username })
+
+    })
+  }
+}
+
+export function openSocketConnectionThunk () {
+  return (dispatch, getState, apiClient) => {
+    return new Promise((resolve, reject) => {
+      dispatch(openSocketConnection())
+
+      apiClient.openSocketConnection()
+        .then(websocket => {
+          dispatch(openSocketConnectionSuccess(websocket))
+          resolve()
+      })
+      .catch((e) => {
+        dispatch(openSocketConnectionFailure(e))
+        reject(e)
+      })
     })
   }
 }

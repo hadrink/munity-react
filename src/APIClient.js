@@ -1,6 +1,7 @@
 export default class APIClient {
-  getBaseURI () {
-    return 'http://localhost:8080/api'
+
+  getBaseURI (protocol = 'http') {
+    return `${protocol}://localhost:8080/api`
   }
 
   defaultHeaders () {
@@ -132,6 +133,32 @@ export default class APIClient {
         console.error(error)
         reject(error)
       })
+    })
+  }
+  sendMessage ({ communityName, username }) {
+    console.log("send message")
+
+    //this.ws.send(JSON.stringify({ communityName, username }));
+
+    console.log({ communityName, username });
+
+    this.ws.send(JSON.stringify({ communityName, username, message: 'Yo jean' }));
+
+    this.ws.onmessage = (event) => {
+      var message = JSON.parse(event.data);
+      console.log(message.message);
+    }
+  }
+  openSocketConnection () {
+    return new Promise((resolve, reject) => {
+      const ws = new WebSocket(`${this.getBaseURI('ws')}/v1/chat`)
+      ws.onopen = () => {
+        resolve(ws)
+      }
+
+      ws.onerror = (event) => {
+        reject(event.data)
+      }
     })
   }
 }

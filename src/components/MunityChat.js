@@ -195,8 +195,9 @@ class MunityChat extends React.Component {
      </Comment.Group>
      <Input
          style={{width: '100%'}}
-         action={{ color: 'red', labelPosition: 'right', icon: 'copy', content: 'Send' }}
+         action={{ color: 'red', labelPosition: 'right', icon: 'copy', content: 'Send', onClick: () => this.props.openSocketConnection() }}
          placeholder='Send a message...'
+
        />
    </Segment>
    </div>

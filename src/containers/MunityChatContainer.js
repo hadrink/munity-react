@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { logout } from '../actions/user'
+import { sendMessageThunk, openSocketConnectionThunk } from '../thunks/community'
 
 import MunityChat from '../components/MunityChat'
 
@@ -8,7 +9,8 @@ import MunityChat from '../components/MunityChat'
     implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = {
-  logout: () => logout(),
+  sendMessage: (communityName, username) => sendMessageThunk(communityName, username),
+  openSocketConnection: () => openSocketConnectionThunk()
 }
 
 const mapStateToProps = (state) => ({
