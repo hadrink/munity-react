@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { logout } from '../actions/user'
+import { communitySelected } from '../actions/community'
 
 import MunityMenu from '../components/Menu'
 
@@ -9,13 +10,15 @@ import MunityMenu from '../components/Menu'
 
 const mapDispatchToProps = {
   logout: () => logout(),
+  activeCommunity: (communityName) => communitySelected(communityName)
 }
 
 const mapStateToProps = (state) => ({
   token: state.getIn(['context', 'token']),
   subscriptions: state.getIn(['community', 'subscriptions']),
   myCommunities: state.getIn(['user', 'myCommunities']),
-  loading: state.getIn(['community', 'loading'])
+  loading: state.getIn(['community', 'loading']),
+  communitySelected: state.getIn(['community', 'communitySelected', 'name'])
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

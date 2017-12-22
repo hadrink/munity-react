@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { logout } from '../actions/user'
-import { sendMessageThunk, openSocketConnectionThunk } from '../thunks/community'
+import { sendMessageThunk, openSocketConnectionThunk, handleMessagesThunk } from '../thunks/community'
 
 import MunityChat from '../components/MunityChat'
 
@@ -8,10 +8,13 @@ import MunityChat from '../components/MunityChat'
     Keys will be passed as props to presentational components. Here we are
     implementing our wrapper around increment; the component doesn't care   */
 
-const mapDispatchToProps = {
-  sendMessage: (communityName, username) => sendMessageThunk(communityName, username),
-  openSocketConnection: () => openSocketConnectionThunk()
-}
+const mapDispatchToProps = (dispatch, props) => ({
+  sendMessage: (communityName, username) => dispatch(sendMessageThunk(communityName, username)),
+  openSocketConnection: () => dispatch(openSocketConnectionThunk())
+  .then(() => {
+    dispatch(handleMessagesThunk())
+  })
+})
 
 const mapStateToProps = (state) => ({
   token: state.getIn(['context', 'token']),

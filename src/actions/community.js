@@ -15,6 +15,8 @@ export const CLOSE_SOCKET_CONNECTION_SUCCESS = 'CLOSE_SOCKET_CONNECTION_SUCCESS'
 export const CLOSE_SOCKET_CONNECTION_FAILURE = 'CLOSE_SOCKET_CONNECTION_FAILURE'
 
 export const SEND_MESSAGE = 'SEND_MESSAGE'
+export const MESSAGE_RECEIVED = 'MESSAGE_RECEIVED'
+export const COMMUNITY_SELECTED = 'COMMUNITY_SELECTED'
 
 export function getSubscriptions () {
   return {
@@ -52,9 +54,15 @@ export function createCommunityFailure (error) {
   }
 }
 
-export function sendMessage (communityName, username) {
+export function sendMessage (message) {
   return {
-    type: SEND_MESSAGE, communityName, username
+    type: SEND_MESSAGE, message
+  }
+}
+
+export function messageReceived (messages) {
+  return {
+    type: MESSAGE_RECEIVED, messages
   }
 }
 
@@ -91,5 +99,11 @@ export function closeSocketConnectionSuccess (message) {
 export function closeSocketConnectionFailure (message) {
   return {
     type: CLOSE_SOCKET_CONNECTION_FAILURE, message
+  }
+}
+
+export function communitySelected (communityName) {
+  return {
+    type: COMMUNITY_SELECTED, communityName
   }
 }

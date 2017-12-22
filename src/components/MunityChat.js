@@ -6,10 +6,20 @@ import { Input, Button, Icon, Segment, Header, Comment } from 'semantic-ui-react
 class MunityChat extends React.Component {
   constructor(props) {
     super(props)
+
+    props.openSocketConnection()
   }
 
   state = {
+    input: ''
+  }
 
+  handleInputChange = (e) => {
+    this.setState({ input: e.target.value })
+  }
+
+  handleSubmit = () => {
+    this.props.sendMessage(this.state.input)
   }
 
   render() {
@@ -195,9 +205,9 @@ class MunityChat extends React.Component {
      </Comment.Group>
      <Input
          style={{width: '100%'}}
-         action={{ color: 'red', labelPosition: 'right', icon: 'copy', content: 'Send', onClick: () => this.props.openSocketConnection() }}
+         action={{ color: 'red', labelPosition: 'right', icon: 'copy', content: 'Send', onClick: (e) => { this.handleSubmit() } }}
          placeholder='Send a message...'
-
+         onChange={ (e) => this.handleInputChange(e) }
        />
    </Segment>
    </div>

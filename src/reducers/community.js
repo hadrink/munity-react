@@ -9,6 +9,8 @@ import {
   OPEN_SOCKET_CONNECTION,
   OPEN_SOCKET_CONNECTION_SUCCESS,
   OPEN_SOCKET_CONNECTION_FAILURE,
+  MESSAGE_RECEIVED,
+  COMMUNITY_SELECTED,
 } from '../actions/community'
 
 import { LOGOUT } from '../actions/user'
@@ -22,6 +24,10 @@ const initialState = () => {
     webSocket: Map({
       isConnecting: false,
       socket: null
+    }),
+    communitySelected: Map({
+      name: '',
+      messages: List()
     }),
     error: {
       identifier: '',
@@ -47,11 +53,16 @@ export default (state = initialState(), action) => {
     case CREATE_COMMUNITY_FAILURE:
       return state.set('isCreating', false).set('error', action.error)
     case OPEN_SOCKET_CONNECTION:
-      return state.set(['webSocket', 'isConnecting'], true)
+      return state.setIn(['webSocket', 'isConnecting'], true)
     case OPEN_SOCKET_CONNECTION_SUCCESS:
-      return state.set(['webSocket', 'isConnecting'], false).set(['webSocket', 'socket'], action.webSocket)
+      return state.setIn(['webSocket', 'isConnecting'], false).setIn(['webSocket', 'socket'], action.websocket)
     case OPEN_SOCKET_CONNECTION_FAILURE:
-      return state.set(['webSocket', 'isConnecting'], false).set('error', action.error)
+      return state.setIn(['webSocket', 'isConnecting'], false).set('error', action.error)
+    case MESSAGE_RECEIVED:
+      const newMessages = state.getIn(['communitySelected', 'messages']).push(action.messages)
+      return state.setIn(['communitySelected', 'messages'], newMessages)
+    case COMMUNITY_SELECTED:
+      return state.setIn(['communitySelected', 'name'], action.communityName)
     case LOGOUT:
       return initialState()
   }

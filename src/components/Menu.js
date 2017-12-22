@@ -13,7 +13,6 @@ class MunityMenu extends React.Component {
   }
 
   state = {
-    activeItem: 'home',
     showLoginModal: false,
     showCreateCommunityModal: false,
     visible: true,
@@ -59,10 +58,10 @@ class MunityMenu extends React.Component {
     this.setState({ 'showCreateCommunityModal': false })
   }
 
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
+  handleItemClick = (e, { name }) => this.props.activeCommunity(name)
 
   render() {
-    const { activeItem } = this.state
+    const { communitySelected } = this.props
     return (
 
       <Sidebar.Pushable as={Segment}>
@@ -73,9 +72,9 @@ class MunityMenu extends React.Component {
           <Item>
             <div className='header'>Trends</div>
             <div className='menu'>
-              <Menu.Item as={Link} to='/#home' name='home' active={activeItem === 'home'} onClick={this.handleItemClick}>Home</Menu.Item>
-              <Menu.Item as={Link} to='/#messages' name='messages' active={activeItem === 'messages'} onClick={this.handleItemClick}>Messages</Menu.Item>
-              <Menu.Item as={Link} to='/#friends' name='friends' active={activeItem === 'friends'} onClick={this.handleItemClick}>Friends</Menu.Item>
+              <Menu.Item as={Link} to='/#home' name='home' active={communitySelected === 'home'} onClick={this.handleItemClick}>Home</Menu.Item>
+              <Menu.Item as={Link} to='/#messages' name='messages' active={communitySelected === 'messages'} onClick={this.handleItemClick}>Messages</Menu.Item>
+              <Menu.Item as={Link} to='/#friends' name='friends' active={communitySelected === 'friends'} onClick={this.handleItemClick}>Friends</Menu.Item>
             </div>
           </Item>
           <Item style={{ display: this.props.subscriptions.count() === 0 ? 'none' : 'block' }}>
@@ -86,7 +85,7 @@ class MunityMenu extends React.Component {
                   as={Link}
                   name={sub.name}
                   to={`/#${sub.name}`}
-                  active={activeItem === sub.name}
+                  active={communitySelected === sub.name}
                   onClick={this.handleItemClick}
                 >
                   {sub.name.charAt(0).toUpperCase() + sub.name.slice(1)}
@@ -102,7 +101,7 @@ class MunityMenu extends React.Component {
                   as={Link}
                   name={c.name}
                   to={`/#${c.name}`}
-                  active={activeItem === c.name}
+                  active={communitySelected === c.name}
                   onClick={this.handleItemClick}
                 >
                   {c.name.charAt(0).toUpperCase() + c.name.slice(1)}
@@ -143,6 +142,8 @@ MunityMenu.propTypes = {
   token: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   logout: PropTypes.func.isRequired,
+  communitySelected: PropTypes.string,
+  activeCommunity: PropTypes.func.isRequired,
 }
 
 export default MunityMenu

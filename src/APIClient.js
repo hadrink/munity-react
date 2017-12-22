@@ -135,19 +135,8 @@ export default class APIClient {
       })
     })
   }
-  sendMessage ({ communityName, username }) {
-    console.log("send message")
-
-    //this.ws.send(JSON.stringify({ communityName, username }));
-
-    console.log({ communityName, username });
-
-    this.ws.send(JSON.stringify({ communityName, username, message: 'Yo jean' }));
-
-    this.ws.onmessage = (event) => {
-      var message = JSON.parse(event.data);
-      console.log(message.message);
-    }
+  sendMessage ({ communityName, message, token, ws }) {
+    ws.send(JSON.stringify({ communityName, token, message }))
   }
   openSocketConnection () {
     return new Promise((resolve, reject) => {
