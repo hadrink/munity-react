@@ -14,6 +14,8 @@ const mapDispatchToProps = (dispatch, props) => ({
 
 const mapStateToProps = (state) => ({
   token: state.getIn(['context', 'token']),
+  messages: state.getIn(['community', 'communitySelected', 'messages']),
+  communityName: state.getIn(['community', 'communitySelected', 'name']),
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
