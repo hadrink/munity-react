@@ -10,10 +10,6 @@ import MunityChat from '../components/MunityChat'
 
 const mapDispatchToProps = (dispatch, props) => ({
   sendMessage: (communityName, username) => dispatch(sendMessageThunk(communityName, username)),
-  openSocketConnection: () => dispatch(openSocketConnectionThunk())
-  .then(() => {
-    dispatch(handleMessagesThunk())
-  })
 })
 
 const mapStateToProps = (state) => ({

@@ -6,8 +6,6 @@ import { Input, Button, Icon, Segment, Header, Comment } from 'semantic-ui-react
 class MunityChat extends React.Component {
   constructor(props) {
     super(props)
-
-    props.openSocketConnection()
   }
 
   state = {

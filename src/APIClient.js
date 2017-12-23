@@ -138,6 +138,13 @@ export default class APIClient {
   sendMessage ({ communityName, message, token, ws }) {
     ws.send(JSON.stringify({ communityName, token, message }))
   }
+  joinCommunityRoom ({ communityName, ws, token }) {
+    if (token) {
+      ws.send(JSON.stringify({ communityName, token }))
+      return
+    }
+    ws.send(JSON.stringify({ communityName }))
+  }
   openSocketConnection () {
     return new Promise((resolve, reject) => {
       const ws = new WebSocket(`${this.getBaseURI('ws')}/v1/chat`)

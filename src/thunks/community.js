@@ -11,6 +11,8 @@ import {
   openSocketConnectionSuccess,
   openSocketConnectionFailure,
   messageReceived,
+  joinCommunityRoom,
+  closeSocketConnection,
 } from '../actions/community'
 
 export function getSubscriptionsThunk () {
@@ -77,6 +79,11 @@ export function handleMessagesThunk (communityName, token) {
   return (dispatch, getState, apiClient) => {
     const state = getState()
     const ws = state.getIn(['community', 'webSocket', 'socket'])
+    const communityName = state.getIn(['community', 'communitySelected', 'name'])
+    const token =  state.getIn(['context', 'token'])
+
+    dispatch(joinCommunityRoom(communityName))
+    apiClient.joinCommunityRoom({ communityName, ws, token })
 
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data)
@@ -88,6 +95,14 @@ export function handleMessagesThunk (communityName, token) {
 export function openSocketConnectionThunk () {
   return (dispatch, getState, apiClient) => {
     return new Promise((resolve, reject) => {
+      const state = getState()
+      const ws = state.getIn(['community', 'webSocket', 'socket'])
+
+      if (ws) {
+        ws.close()
+        dispatch(closeSocketConnection())
+      }
+
       dispatch(openSocketConnection())
 
       apiClient.openSocketConnection()

@@ -17,6 +17,7 @@ export const CLOSE_SOCKET_CONNECTION_FAILURE = 'CLOSE_SOCKET_CONNECTION_FAILURE'
 export const SEND_MESSAGE = 'SEND_MESSAGE'
 export const MESSAGE_RECEIVED = 'MESSAGE_RECEIVED'
 export const COMMUNITY_SELECTED = 'COMMUNITY_SELECTED'
+export const JOIN_COMMUNITY_ROOM = 'JOIN_COMMUNITY_ROOM'
 
 export function getSubscriptions () {
   return {
@@ -105,5 +106,11 @@ export function closeSocketConnectionFailure (message) {
 export function communitySelected (communityName) {
   return {
     type: COMMUNITY_SELECTED, communityName
+  }
+}
+
+export function joinCommunityRoom (communityName) {
+  return {
+    type: JOIN_COMMUNITY_ROOM, communityName
   }
 }

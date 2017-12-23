@@ -11,6 +11,7 @@ import {
   OPEN_SOCKET_CONNECTION_FAILURE,
   MESSAGE_RECEIVED,
   COMMUNITY_SELECTED,
+  JOIN_COMMUNITY_ROOM,
 } from '../actions/community'
 
 import { LOGOUT } from '../actions/user'
@@ -62,6 +63,8 @@ export default (state = initialState(), action) => {
       const newMessages = state.getIn(['communitySelected', 'messages']).push(action.messages)
       return state.setIn(['communitySelected', 'messages'], newMessages)
     case COMMUNITY_SELECTED:
+      return state.setIn(['communitySelected', 'name'], action.communityName)
+    case JOIN_COMMUNITY_ROOM:
       return state.setIn(['communitySelected', 'name'], action.communityName)
     case LOGOUT:
       return initialState()

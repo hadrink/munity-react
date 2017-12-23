@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { logout } from '../actions/user'
 import { communitySelected } from '../actions/community'
+import { openSocketConnectionThunk, handleMessagesThunk } from '../thunks/community'
 
 import MunityMenu from '../components/Menu'
 
@@ -8,10 +9,14 @@ import MunityMenu from '../components/Menu'
     Keys will be passed as props to presentational components. Here we are
     implementing our wrapper around increment; the component doesn't care   */
 
-const mapDispatchToProps = {
-  logout: () => logout(),
-  activeCommunity: (communityName) => communitySelected(communityName)
-}
+const mapDispatchToProps = (dispatch, props) => ({
+  logout: () => dispatch(logout()),
+  activeCommunity: (communityName) => dispatch(openSocketConnectionThunk())
+  .then(() => {
+    dispatch(communitySelected(communityName))
+    dispatch(handleMessagesThunk(communityName))
+  })
+})
 
 const mapStateToProps = (state) => ({
   token: state.getIn(['context', 'token']),
