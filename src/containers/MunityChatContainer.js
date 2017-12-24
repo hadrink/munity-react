@@ -16,6 +16,7 @@ const mapStateToProps = (state) => ({
   token: state.getIn(['context', 'token']),
   messages: state.getIn(['community', 'communitySelected', 'messages']),
   communityName: state.getIn(['community', 'communitySelected', 'name']),
+  loading: state.getIn(['community', 'webSocket', 'isConnecting']),
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

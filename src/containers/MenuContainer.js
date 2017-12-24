@@ -23,7 +23,7 @@ const mapStateToProps = (state) => ({
   subscriptions: state.getIn(['community', 'subscriptions']),
   myCommunities: state.getIn(['user', 'myCommunities']),
   loading: state.getIn(['community', 'loading']),
-  communitySelected: state.getIn(['community', 'communitySelected', 'name'])
+  communitySelected: state.getIn(['community', 'communitySelected', 'name']),
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
