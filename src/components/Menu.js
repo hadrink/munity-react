@@ -6,6 +6,7 @@ import { Link } from 'react-router'
 import LoginRegister from '../containers/LoginRegisterContainer'
 import CreateCommunity from '../containers/CreateCommunityContainer'
 import MunityChat from '../containers/MunityChatContainer'
+import MunitySpace from '../containers/MunitySpaceContainer'
 
 class MunityMenu extends React.Component {
   constructor(props) {
@@ -119,14 +120,14 @@ class MunityMenu extends React.Component {
           {this.CreateCommunityModal()}
 
         </Sidebar>
-        <Sidebar.Pusher style={{ height: '100%' }}>
+        <Sidebar.Pusher style={{ height: '100%', 'padding-right' : '260px'}}>
           <Grid columns={2} divided style={{ margin: 0, height: '100%' }}>
             <Grid.Row style={{padding: 0}}>
               <Grid.Column width={10}>
                 <MunityChat />
               </Grid.Column>
               <Grid.Column width={6}>
-                <MunityChat />
+                <MunitySpace />
               </Grid.Column>
             </Grid.Row>
           </Grid>
