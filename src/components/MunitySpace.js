@@ -17,7 +17,7 @@ class MunitySpace extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.sendMessage(this.state.input)
+    this.props.sendMessage(this.props.communityName, this.state.input)
   }
 
   render() {
@@ -30,19 +30,16 @@ class MunitySpace extends React.Component {
         <Segment basic floated style={{ width: '100%', height: '100%', top: '-140px', padding: '140px 0 0 0' }}>
           <Comment.Group style={{ height: '100%', width: '100%', overflowY: 'scroll', maxWidth: 'none' }}>
 
-            {this.props.messages.map(message => (
+            {this.props.space.toJS().map(message => (
               <Comment>
                 <Comment.Content>
-                  <Comment.Author>{message.username}</Comment.Author>
+                  {/* <Comment.Author>{message.username}</Comment.Author> */}
                   <Comment.Metadata>
-                    <div>1 day ago</div>
+                    <div>{message.date.$date}</div>
                   </Comment.Metadata>
                   <Comment.Text>
-                    <p>{message.message}</p>
+                    <p>{message.content}</p>
                   </Comment.Text>
-                  <Comment.Actions>
-                    <Comment.Action>Reply</Comment.Action>
-                  </Comment.Actions>
                 </Comment.Content>
               </Comment>
             ))}

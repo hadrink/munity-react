@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { logout } from '../actions/user'
 import { communitySelected } from '../actions/community'
-import { openSocketConnectionThunk, handleMessagesThunk } from '../thunks/community'
+import { openSocketConnectionThunk, handleMessagesThunk, getSpaceThunk } from '../thunks/community'
 
 import MunityMenu from '../components/Menu'
 
@@ -15,6 +15,7 @@ const mapDispatchToProps = (dispatch, props) => ({
   .then(() => {
     dispatch(communitySelected(communityName))
     dispatch(handleMessagesThunk(communityName))
+    dispatch(getSpaceThunk(communityName))
   })
 })
 

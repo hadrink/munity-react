@@ -15,9 +15,19 @@ export const CLOSE_SOCKET_CONNECTION_SUCCESS = 'CLOSE_SOCKET_CONNECTION_SUCCESS'
 export const CLOSE_SOCKET_CONNECTION_FAILURE = 'CLOSE_SOCKET_CONNECTION_FAILURE'
 
 export const SEND_MESSAGE = 'SEND_MESSAGE'
+export const SEND_NOTIFICATION_TO_SERVER = 'SEND_NOTIFICATION_TO_SERVER'
+export const RECEIVE_NOTIFICATION_FROM_SERVER = 'RECEIVE_NOTIFICATION_FROM_SERVER'
 export const MESSAGE_RECEIVED = 'MESSAGE_RECEIVED'
 export const COMMUNITY_SELECTED = 'COMMUNITY_SELECTED'
 export const JOIN_COMMUNITY_ROOM = 'JOIN_COMMUNITY_ROOM'
+
+export const GET_SPACE = 'GET_SPACE'
+export const GET_SPACE_SUCCESS = 'GET_SPACE_SUCCESS'
+export const GET_SPACE_FAILURE = 'GET_SPACE_FAILURE'
+
+export const SEND_MESSAGE_IN_SPACE = 'SEND_MESSAGE_IN_SPACE'
+export const SEND_MESSAGE_IN_SPACE_SUCCESS = 'SEND_MESSAGE_IN_SPACE_SUCCESS'
+export const SEND_MESSAGE_IN_SPACE_FAILURE = 'SEND_MESSAGE_IN_SPACE_FAILURE'
 
 export function getSubscriptions () {
   return {
@@ -58,6 +68,18 @@ export function createCommunityFailure (error) {
 export function sendMessage (message) {
   return {
     type: SEND_MESSAGE, message
+  }
+}
+
+export function sendNotificationToServer () {
+  return {
+    type: SEND_NOTIFICATION_TO_SERVER
+  }
+}
+
+export function receiveNotificationFromServer (notification) {
+  return {
+    type: RECEIVE_NOTIFICATION_FROM_SERVER, notification
   }
 }
 
@@ -112,5 +134,41 @@ export function communitySelected (communityName) {
 export function joinCommunityRoom (communityName) {
   return {
     type: JOIN_COMMUNITY_ROOM, communityName
+  }
+}
+
+export function getSpace () {
+  return {
+    type: GET_SPACE
+  }
+}
+
+export function getSpaceSuccess (space) {
+  return {
+    type: GET_SPACE_SUCCESS, space
+  }
+}
+
+export function getSpaceFailure (error) {
+  return {
+    type: GET_SPACE_FAILURE, error
+  }
+}
+
+export function sendMessageInSpace () {
+  return {
+    type: SEND_MESSAGE_IN_SPACE
+  }
+}
+
+export function sendMessageInSpaceSuccess (space) {
+  return {
+    type: SEND_MESSAGE_IN_SPACE_SUCCESS, space
+  }
+}
+
+export function sendMessageInSpaceFailure (error) {
+  return {
+    type: SEND_MESSAGE_IN_SPACE_FAILURE, error
   }
 }

@@ -7,12 +7,20 @@ import {
   createCommunitySuccess,
   createCommunityFailure,
   sendMessage,
+  sendNotificationToServer,
+  receiveNotificationFromServer,
   openSocketConnection,
   openSocketConnectionSuccess,
   openSocketConnectionFailure,
   messageReceived,
   joinCommunityRoom,
   closeSocketConnection,
+  getSpace,
+  getSpaceSuccess,
+  getSpaceFailure,
+  sendMessageInSpace,
+  sendMessageInSpaceSuccess,
+  sendMessageInSpaceFailure,
 } from '../actions/community'
 
 export function getSubscriptionsThunk () {
@@ -75,6 +83,21 @@ export function sendMessageThunk (message) {
   }
 }
 
+export function sendNotificationToServerThunk (notification) {
+  return (dispatch, getState, apiClient) => {
+    return new Promise((resolve, reject) => {
+      const state = getState()
+      const ws = state.getIn(['community', 'webSocket', 'socket'])
+      const communityName = state.getIn(['community', 'communitySelected', 'name'])
+      const token =  state.getIn(['context', 'token'])
+
+      dispatch(sendNotificationToServer())
+      apiClient.sendNotificationToServer({ communityName, notification, token, ws })
+      resolve()
+    })
+  }
+}
+
 export function handleMessagesThunk (communityName, token) {
   return (dispatch, getState, apiClient) => {
     const state = getState()
@@ -87,6 +110,17 @@ export function handleMessagesThunk (communityName, token) {
 
     ws.onmessage = (event) => {
       const message = JSON.parse(event.data)
+      const serverNotification = message["server_notification"]
+      if (serverNotification) {
+        dispatch(receiveNotificationFromServer(serverNotification))
+        switch (serverNotification) {
+          case "UPDATE_SPACE":
+            dispatch(getSpaceThunk(communityName))
+        }
+
+        return
+      }
+
       dispatch(messageReceived(message))
     }
   }
@@ -114,6 +148,48 @@ export function openSocketConnectionThunk () {
         dispatch(openSocketConnectionFailure(e))
         reject(e)
       })
+    })
+  }
+}
+
+export function getSpaceThunk (communityName) {
+  return (dispatch, getState, apiClient) => {
+    return new Promise((resolve, reject) => {
+      dispatch(getSpace())
+
+      apiClient.getSpace({ communityName })
+        .then(data => {
+          const space = JSON.parse(data)
+
+          dispatch(getSpaceSuccess(List(space["messages"])))
+          resolve()
+        })
+        .catch((e) => {
+          dispatch(getSpaceFailure(e))
+          reject(e)
+        })
+    })
+  }
+}
+
+export function sendMessageInSpaceThunk (communityName, message) {
+  return (dispatch, getState, apiClient) => {
+    return new Promise((resolve, reject) => {
+      const state = getState()
+      const token = state.getIn(['context', 'token'])
+      dispatch(sendMessageInSpace())
+
+      apiClient.sendMessageInSpace({ token, communityName, message })
+        .then(data => {
+          const space = JSON.parse(data)
+          console.log(space["messages"])
+          dispatch(sendMessageInSpaceSuccess(List(space["messages"])))
+          resolve()
+        })
+        .catch((e) => {
+          dispatch(sendMessageInSpaceFailure(e))
+          reject(e)
+        })
     })
   }
 }

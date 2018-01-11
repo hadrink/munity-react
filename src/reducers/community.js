@@ -12,6 +12,12 @@ import {
   MESSAGE_RECEIVED,
   COMMUNITY_SELECTED,
   JOIN_COMMUNITY_ROOM,
+  GET_SPACE,
+  GET_SPACE_SUCCESS,
+  GET_SPACE_FAILURE,
+  SEND_MESSAGE_IN_SPACE,
+  SEND_MESSAGE_IN_SPACE_SUCCESS,
+  SEND_MESSAGE_IN_SPACE_FAILURE,
 } from '../actions/community'
 
 import { LOGOUT } from '../actions/user'
@@ -28,7 +34,8 @@ const initialState = () => {
     }),
     communitySelected: Map({
       name: '',
-      messages: List()
+      messages: List(),
+      space: List(),
     }),
     error: {
       identifier: '',
@@ -59,6 +66,18 @@ export default (state = initialState(), action) => {
       return state.setIn(['webSocket', 'isConnecting'], false).setIn(['webSocket', 'socket'], action.websocket)
     case OPEN_SOCKET_CONNECTION_FAILURE:
       return state.setIn(['webSocket', 'isConnecting'], false).set('error', action.error)
+    case GET_SPACE:
+      return state.set('loading', true)
+    case GET_SPACE_SUCCESS:
+      return state.set('loading', false).setIn(['communitySelected', 'space'], action.space)
+    case GET_SPACE_FAILURE:
+      return state.set('loading', false).set('error', action.error)
+    case SEND_MESSAGE_IN_SPACE:
+      return state.set('loading', true)
+    case SEND_MESSAGE_IN_SPACE_SUCCESS:
+      return state.set('loading', false).setIn(['communitySelected', 'space'], action.space)
+    case SEND_MESSAGE_IN_SPACE_FAILURE:
+      return state.set('loading', false).set('error', action.error)
     case MESSAGE_RECEIVED:
       const newMessages = state.getIn(['communitySelected', 'messages']).push(action.messages)
       return state.setIn(['communitySelected', 'messages'], newMessages)

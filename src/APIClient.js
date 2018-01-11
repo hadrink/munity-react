@@ -138,6 +138,9 @@ export default class APIClient {
   sendMessage ({ communityName, message, token, ws }) {
     ws.send(JSON.stringify({ communityName, token, message }))
   }
+  sendNotificationToServer ({ communityName, notification, token, ws }) {
+    ws.send(JSON.stringify({ communityName, token, notification }))
+  }
   joinCommunityRoom ({ communityName, ws, token }) {
     if (token) {
       ws.send(JSON.stringify({ communityName, token }))
@@ -155,6 +158,53 @@ export default class APIClient {
       ws.onerror = (event) => {
         reject(event.data)
       }
+    })
+  }
+  getSpace ({ communityName }) {
+    return new Promise((resolve, reject) => {
+      const baseURL = `${this.getBaseURI()}/v1/spaces/${communityName}`
+      const headers = this.defaultHeaders()
+
+      return fetch((baseURL), {
+        headers,
+        method: 'GET',
+        mode: 'cors',
+      })
+      .then((response) => {
+        if (response.ok) {
+          response.text().then(data => resolve(data))
+        } else {
+          response.text().then(error => reject(JSON.parse(error)))
+        }
+      })
+      .catch(error => {
+        console.error(error)
+        reject(error)
+      })
+    })
+  }
+  sendMessageInSpace ({ token, communityName, message }) {
+    return new Promise((resolve, reject) => {
+      const baseURL = `${this.getBaseURI()}/v1/spaces/${communityName}`
+      const headers = this.securedheaders(token)
+
+      return fetch((baseURL), {
+        headers,
+        method: 'PATCH',
+        mode: 'cors',
+        body: JSON.stringify({ message }),
+      })
+      .then((response) => {
+        if (response.ok) {
+          response.text().then(data => resolve(data))
+        } else {
+          response.text().then(error => reject(JSON.parse(error)))
+        }
+      })
+      .catch(error => {
+        console.error(error)
+        reject(error)
+      })
     })
   }
 }

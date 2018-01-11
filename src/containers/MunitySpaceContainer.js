@@ -1,6 +1,5 @@
 import { connect } from 'react-redux'
-import { logout } from '../actions/user'
-import { sendMessageThunk, openSocketConnectionThunk, handleMessagesThunk } from '../thunks/community'
+import { sendMessageInSpaceThunk, sendNotificationToServerThunk } from '../thunks/community'
 
 import MunitySpace from '../components/MunitySpace'
 
@@ -9,12 +8,15 @@ import MunitySpace from '../components/MunitySpace'
     implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = (dispatch, props) => ({
-  sendMessage: (communityName, username) => dispatch(sendMessageThunk(communityName, username)),
+  sendMessage: (communityName, message) => dispatch(sendMessageInSpaceThunk(communityName, message))
+  .then(() => {
+    dispatch(sendNotificationToServerThunk("UPDATE_SPACE"))
+  }),
 })
 
 const mapStateToProps = (state) => ({
   token: state.getIn(['context', 'token']),
-  messages: state.getIn(['community', 'communitySelected', 'messages']),
+  space: state.getIn(['community', 'communitySelected', 'space']),
   communityName: state.getIn(['community', 'communitySelected', 'name']),
   loading: state.getIn(['community', 'webSocket', 'isConnecting']),
 })
