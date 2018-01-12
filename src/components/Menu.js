@@ -120,9 +120,9 @@ class MunityMenu extends React.Component {
           {this.CreateCommunityModal()}
 
         </Sidebar>
-        <Sidebar.Pusher style={{ height: '100%', 'padding-right' : '260px'}}>
-          <Grid columns={2} divided style={{ margin: 0, height: '100%' }}>
-            <Grid.Row style={{padding: 0}}>
+        <Sidebar.Pusher style={{ 'padding-right' : '260px' }}>
+          <Grid columns={2} divided style={{ margin: 0 }}>
+            <Grid.Row style={{ padding: 0 }}>
               <Grid.Column width={10}>
                 <MunityChat />
               </Grid.Column>

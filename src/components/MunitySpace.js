@@ -2,6 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Input, Button, Icon, Segment, Header, Comment, Form, Dimmer, Loader } from 'semantic-ui-react'
+import moment from 'moment'
 
 class MunitySpace extends React.Component {
   constructor(props) {
@@ -9,7 +10,34 @@ class MunitySpace extends React.Component {
   }
 
   state = {
-    input: ''
+    input: '',
+    width: 0,
+    height: 0,
+  }
+
+  componentDidMount() {
+    this.scrollToBottom();
+    window.addEventListener("resize", this.updateDimensions)
+  }
+
+  componentWillMount() {
+    this.updateDimensions()
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom()
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
+  }
+
+  updateDimensions = () => {
+    this.setState({width: window.innerWidth, height: window.innerHeight});
+  }
+
+  scrollToBottom = () => {
+    this.messagesEnd.scrollIntoView();
   }
 
   handleInputChange = (e) => {
@@ -22,20 +50,20 @@ class MunitySpace extends React.Component {
 
   render() {
     return (
-      <div style={{ height: '100%', width: '100%' }}>
+      <div>
         <Dimmer active={this.props.loading}>
           <Loader active={this.props.loading} />
         </Dimmer>
-        <Header style={{ width: '100%' }} as='h3'>{this.props.communityName + ' Space' }</Header>
-        <Segment basic floated style={{ width: '100%', height: '100%', top: '-140px', padding: '140px 0 0 0' }}>
-          <Comment.Group style={{ height: '100%', width: '100%', overflowY: 'scroll', maxWidth: 'none' }}>
+        <Header as='h3'>{this.props.communityName + ' Space' }</Header>
+        <Segment basic floated style={{ padding: 0 }}>
+          <Comment.Group style={{ height: `${this.state.height - 138 }px`, width: '100%', overflowY: 'scroll', maxWidth: 'none' }}>
 
-            {this.props.space.toJS().map(message => (
+            {this.props.space.toJS().map((message, id) => (
               <Comment>
                 <Comment.Content>
-                  {/* <Comment.Author>{message.username}</Comment.Author> */}
+                  <Comment.Author as='a'>{message.username}</Comment.Author>
                   <Comment.Metadata>
-                    <div>{message.date.$date}</div>
+                    <div>{moment(message.date.$date).format("ddd LT")}</div>
                   </Comment.Metadata>
                   <Comment.Text>
                     <p>{message.content}</p>
@@ -43,9 +71,9 @@ class MunitySpace extends React.Component {
                 </Comment.Content>
               </Comment>
             ))}
-
+            <div ref={(el) => { this.messagesEnd = el }}></div>
           </Comment.Group>
-          <Form>
+          <Form style={{marginBottom: '15px'}}>
             <Form.Input
               disabled={!this.props.token}
               style={{ width: '100%' }}

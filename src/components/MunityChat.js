@@ -9,7 +9,30 @@ class MunityChat extends React.Component {
   }
 
   state = {
-    input: ''
+    input: '',
+    width: 0,
+    height: 0,
+  }
+
+  componentDidMount() {
+    this.scrollToBottom()
+    window.addEventListener("resize", this.updateDimensions)
+  }
+
+  componentWillMount() {
+    this.updateDimensions()
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions)
+  }
+
+  componentDidUpdate() {
+    this.scrollToBottom()
+  }
+
+  updateDimensions = () => {
+    this.setState({width: window.innerWidth, height: window.innerHeight});
   }
 
   handleInputChange = (e) => {
@@ -20,15 +43,19 @@ class MunityChat extends React.Component {
     this.props.sendMessage(this.state.input)
   }
 
+  scrollToBottom() {
+    this.messagesEnd.scrollIntoView()
+  }
+
   render() {
     return (
-      <div style={{ height: '100%', width: '100%' }}>
+      <div>
         <Dimmer active={this.props.loading}>
           <Loader active={this.props.loading} />
         </Dimmer>
-        <Header style={{ width: '100%' }} as='h3'>{this.props.communityName}</Header>
-        <Segment basic floated style={{ width: '100%', height: '100%', top: '-140px', padding: '140px 0 0 0' }}>
-          <Comment.Group style={{ height: '100%', width: '100%', overflowY: 'scroll', maxWidth: 'none' }}>
+        <Header as='h3'>{this.props.communityName}</Header>
+        <Segment basic floated style={{ padding: 0 }}>
+          <Comment.Group style={{ height: `${this.state.height - 138 }px`, width: '100%', overflowY: 'scroll', maxWidth: 'none' }}>
 
             {this.props.messages.map(message => (
               <Comment>
@@ -46,9 +73,9 @@ class MunityChat extends React.Component {
                 </Comment.Content>
               </Comment>
             ))}
-
+            <div style={{float: 'left', clear: 'both'}} ref={(el) => { this.messagesEnd = el }}></div>
           </Comment.Group>
-          <Form>
+          <Form style={{marginBottom: '15px'}}>
             <Form.Input
               disabled={!this.props.token}
               style={{ width: '100%' }}
