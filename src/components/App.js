@@ -16,7 +16,7 @@ class App extends React.Component {
     const { activeItem } = this.state
 
     return (
-          <MunityMenu />
+          <MunityMenu isReady={this.state.isReady} />
     )
   }
 }

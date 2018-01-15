@@ -19,6 +19,10 @@ class MunityMenu extends React.Component {
     visible: true,
   }
 
+  componentDidMount() {
+    this.props.getTrends()
+  }
+
   LoginModal = () => (
     <Modal open={this.state.showLoginModal} onClose={() => { this.closeLoginModal() }}>
       <Modal.Header>Login / Register</Modal.Header>
@@ -65,7 +69,7 @@ class MunityMenu extends React.Component {
     const { communitySelected } = this.props
     return (
 
-      <Sidebar.Pushable as={Segment}>
+      <Sidebar.Pushable visible={this.props.isReady} as={Segment}>
         <Sidebar as={Menu} animation='push' visible={this.state.visible} vertical inverted>
           <Dimmer active={this.props.loading}>
             <Loader active={this.props.loading} />
@@ -73,9 +77,17 @@ class MunityMenu extends React.Component {
           <Item>
             <div className='header'>Trends</div>
             <div className='menu'>
-              <Menu.Item as={Link} to='/#home' name='home' active={communitySelected === 'home'} onClick={this.handleItemClick}>Home</Menu.Item>
-              <Menu.Item as={Link} to='/#messages' name='messages' active={communitySelected === 'messages'} onClick={this.handleItemClick}>Messages</Menu.Item>
-              <Menu.Item as={Link} to='/#friends' name='friends' active={communitySelected === 'friends'} onClick={this.handleItemClick}>Friends</Menu.Item>
+              {this.props.trends.map(community => (
+                <Menu.Item
+                  as={Link}
+                  to={`/#${community.name}`}
+                  name={community.name}
+                  active={communitySelected === community.name}
+                  onClick={this.handleItemClick}
+                >
+                  {community.name.charAt(0).toUpperCase() + community.name.slice(1)}
+                </Menu.Item>
+              ))}
             </div>
           </Item>
           <Item style={{ display: this.props.subscriptions.count() === 0 ? 'none' : 'block' }}>

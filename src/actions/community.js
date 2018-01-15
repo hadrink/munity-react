@@ -29,6 +29,14 @@ export const SEND_MESSAGE_IN_SPACE = 'SEND_MESSAGE_IN_SPACE'
 export const SEND_MESSAGE_IN_SPACE_SUCCESS = 'SEND_MESSAGE_IN_SPACE_SUCCESS'
 export const SEND_MESSAGE_IN_SPACE_FAILURE = 'SEND_MESSAGE_IN_SPACE_FAILURE'
 
+export const GET_COMMUNITIES_TRENDS = 'GET_COMMUNITIES_TRENDS'
+export const GET_COMMUNITIES_TRENDS_SUCCESS = 'GET_COMMUNITIES_TRENDS_SUCCESS'
+export const GET_COMMUNITIES_TRENDS_FAILURE = 'GET_COMMUNITIES_TRENDS_FAILURE'
+
+export const SUBSCRIBE_TO_COMMUNITY = 'SUBSCRIBE_TO_COMMUNITY'
+export const SUBSCRIBE_TO_COMMUNITY_SUCCESS = 'SUBSCRIBE_TO_COMMUNITY_SUCCESS'
+export const SUBSCRIBE_TO_COMMUNITY_FAILURE = 'SUBSCRIBE_TO_COMMUNITY_FAILURE'
+
 export function getSubscriptions () {
   return {
     type: GET_SUBSCRIPTIONS
@@ -170,5 +178,41 @@ export function sendMessageInSpaceSuccess (space) {
 export function sendMessageInSpaceFailure (error) {
   return {
     type: SEND_MESSAGE_IN_SPACE_FAILURE, error
+  }
+}
+
+export function getCommunitiesTrends () {
+  return {
+    type: GET_COMMUNITIES_TRENDS
+  }
+}
+
+export function getCommunitiesTrendsSuccess (communities) {
+  return {
+    type: GET_COMMUNITIES_TRENDS_SUCCESS, communities
+  }
+}
+
+export function getCommunitiesTrendsFailure (error) {
+  return {
+    type: GET_COMMUNITIES_TRENDS_FAILURE, error
+  }
+}
+
+export function subscribeToCommunity () {
+  return {
+    type: SUBSCRIBE_TO_COMMUNITY
+  }
+}
+
+export function subscribeToCommunitySuccess (communities) {
+  return {
+    type: SUBSCRIBE_TO_COMMUNITY_SUCCESS, communities
+  }
+}
+
+export function subscribeToCommunityFailure (error) {
+  return {
+    type: SUBSCRIBE_TO_COMMUNITY_FAILURE, error
   }
 }

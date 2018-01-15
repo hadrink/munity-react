@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { logout } from '../actions/user'
-import { sendMessageThunk, openSocketConnectionThunk, handleMessagesThunk } from '../thunks/community'
+import { sendMessageThunk, openSocketConnectionThunk, handleMessagesThunk, subscribeToCommunityThunk } from '../thunks/community'
 
 import MunityChat from '../components/MunityChat'
 
@@ -10,6 +10,7 @@ import MunityChat from '../components/MunityChat'
 
 const mapDispatchToProps = (dispatch, props) => ({
   sendMessage: (communityName, username) => dispatch(sendMessageThunk(communityName, username)),
+  subscribe: (communityName) => dispatch(subscribeToCommunityThunk(communityName))
 })
 
 const mapStateToProps = (state) => ({
@@ -17,6 +18,7 @@ const mapStateToProps = (state) => ({
   messages: state.getIn(['community', 'communitySelected', 'messages']),
   communityName: state.getIn(['community', 'communitySelected', 'name']),
   loading: state.getIn(['community', 'webSocket', 'isConnecting']),
+  subscriptions: state.getIn(['community', 'subscriptions']),
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

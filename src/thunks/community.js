@@ -21,6 +21,12 @@ import {
   sendMessageInSpace,
   sendMessageInSpaceSuccess,
   sendMessageInSpaceFailure,
+  getCommunitiesTrends,
+  getCommunitiesTrendsSuccess,
+  getCommunitiesTrendsFailure,
+  subscribeToCommunity,
+  subscribeToCommunitySuccess,
+  subscribeToCommunityFailure,
 } from '../actions/community'
 
 export function getSubscriptionsThunk () {
@@ -188,6 +194,47 @@ export function sendMessageInSpaceThunk (communityName, message) {
         })
         .catch((e) => {
           dispatch(sendMessageInSpaceFailure(e))
+          reject(e)
+        })
+    })
+  }
+}
+
+export function getCommunitiesTrendsThunk () {
+  return (dispatch, getState, apiClient) => {
+    return new Promise((resolve, reject) => {
+      dispatch(getCommunitiesTrends())
+
+      apiClient.getCommunitiesTrends()
+        .then(data => {
+          const trends = JSON.parse(data)
+
+          dispatch(getCommunitiesTrendsSuccess(List(trends)))
+          resolve()
+        })
+        .catch((e) => {
+          dispatch(getCommunitiesTrendsFailure(e))
+          reject(e)
+        })
+    })
+  }
+}
+
+export function subscribeToCommunityThunk (communityName) {
+  return (dispatch, getState, apiClient) => {
+    return new Promise((resolve, reject) => {
+      const state = getState()
+      const token = state.getIn(['context', 'token'])
+      dispatch(subscribeToCommunity())
+
+      apiClient.subscribeToCommunity({ token, communityName })
+        .then(data => {
+          const { subscriptions } = JSON.parse(data)
+          dispatch(subscribeToCommunitySuccess(List(subscriptions)))
+          resolve()
+        })
+        .catch((e) => {
+          dispatch(subscribeToCommunityFailure(e))
           reject(e)
         })
     })

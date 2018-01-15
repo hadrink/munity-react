@@ -18,6 +18,12 @@ import {
   SEND_MESSAGE_IN_SPACE,
   SEND_MESSAGE_IN_SPACE_SUCCESS,
   SEND_MESSAGE_IN_SPACE_FAILURE,
+  GET_COMMUNITIES_TRENDS,
+  GET_COMMUNITIES_TRENDS_SUCCESS,
+  GET_COMMUNITIES_TRENDS_FAILURE,
+  SUBSCRIBE_TO_COMMUNITY,
+  SUBSCRIBE_TO_COMMUNITY_SUCCESS,
+  SUBSCRIBE_TO_COMMUNITY_FAILURE,
 } from '../actions/community'
 
 import { LOGOUT } from '../actions/user'
@@ -37,6 +43,7 @@ const initialState = () => {
       messages: List(),
       space: List(),
     }),
+    trends: List(),
     error: {
       identifier: '',
       reason: '',
@@ -53,6 +60,12 @@ export default (state = initialState(), action) => {
     case GET_SUBSCRIPTIONS_SUCCESS:
       return state.set('loading', false).set('subscriptions', action.communities)
     case GET_SUBSCRIPTIONS_FAILURE:
+      return state.set('loading', false).set('error', action.error)
+    case SUBSCRIBE_TO_COMMUNITY:
+      return state.set('loading', true)
+    case SUBSCRIBE_TO_COMMUNITY_SUCCESS:
+      return state.set('loading', false).set('subscriptions', action.communities)
+    case SUBSCRIBE_TO_COMMUNITY_FAILURE:
       return state.set('loading', false).set('error', action.error)
     case CREATE_COMMUNITY:
       return state.set('isCreating', true)
@@ -71,6 +84,12 @@ export default (state = initialState(), action) => {
     case GET_SPACE_SUCCESS:
       return state.set('loading', false).setIn(['communitySelected', 'space'], action.space)
     case GET_SPACE_FAILURE:
+      return state.set('loading', false).set('error', action.error)
+    case GET_COMMUNITIES_TRENDS:
+      return state.set('loading', true)
+    case GET_COMMUNITIES_TRENDS_SUCCESS:
+      return state.set('loading', false).set('trends', action.communities)
+    case GET_COMMUNITIES_TRENDS_FAILURE:
       return state.set('loading', false).set('error', action.error)
     case SEND_MESSAGE_IN_SPACE:
       return state.set('loading', true)

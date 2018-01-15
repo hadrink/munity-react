@@ -2,6 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Input, Button, Icon, Segment, Header, Comment, Form, Dimmer, Loader } from 'semantic-ui-react'
+import moment from 'moment'
 
 class MunityChat extends React.Component {
   constructor(props) {
@@ -43,6 +44,10 @@ class MunityChat extends React.Component {
     this.props.sendMessage(this.state.input)
   }
 
+  handleSubscription = () => {
+    this.props.subscribe(this.props.communityName)
+  }
+
   scrollToBottom() {
     this.messagesEnd.scrollIntoView()
   }
@@ -53,23 +58,29 @@ class MunityChat extends React.Component {
         <Dimmer active={this.props.loading}>
           <Loader active={this.props.loading} />
         </Dimmer>
-        <Header as='h3'>{this.props.communityName}</Header>
+        <Header as='h3' style={{display: 'inline-block'}}>{this.props.communityName}</Header>
+        <Button
+          disabled={!this.props.token}
+          size='mini'
+          style={{float: 'right', marginTop: '23px'}}
+          as='a'
+          icon={this.props.subscriptions.some((value) => value.name == this.props.communityName) ? 'star' : 'empty star'}
+          onClick={ () => this.handleSubscription() }
+        >
+        </Button>
         <Segment basic floated style={{ padding: 0 }}>
-          <Comment.Group style={{ height: `${this.state.height - 138 }px`, width: '100%', overflowY: 'scroll', maxWidth: 'none' }}>
+          <Comment.Group style={{ height: `${this.state.height - 153 }px`, width: '100%', overflowY: 'auto', maxWidth: 'none' }}>
 
             {this.props.messages.map(message => (
               <Comment>
                 <Comment.Content>
-                  <Comment.Author>{message.username}</Comment.Author>
+                  <Comment.Author as='a'>{message.username}</Comment.Author>
                   <Comment.Metadata>
-                    <div>1 day ago</div>
+                    <div>{moment().format("ddd LT")}</div>
                   </Comment.Metadata>
                   <Comment.Text>
                     <p>{message.message}</p>
                   </Comment.Text>
-                  <Comment.Actions>
-                    <Comment.Action>Reply</Comment.Action>
-                  </Comment.Actions>
                 </Comment.Content>
               </Comment>
             ))}
@@ -79,7 +90,7 @@ class MunityChat extends React.Component {
             <Form.Input
               disabled={!this.props.token}
               style={{ width: '100%' }}
-              action={{ color: 'red', labelPosition: 'right', icon: 'copy', content: 'Send', onClick: (e) => { this.handleSubmit() } }}
+              action={{ style: { backgroundColor: '#FFB88C', color: '#FFF' }, labelPosition: 'right', icon: 'send', content: 'Send', onClick: (e) => { this.handleSubmit() } }}
               placeholder='Send a message...'
               onChange={(e) => this.handleInputChange(e)}
             />

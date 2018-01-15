@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { logout } from '../actions/user'
 import { communitySelected } from '../actions/community'
-import { openSocketConnectionThunk, handleMessagesThunk, getSpaceThunk } from '../thunks/community'
+import { openSocketConnectionThunk, handleMessagesThunk, getSpaceThunk, getCommunitiesTrendsThunk } from '../thunks/community'
 
 import MunityMenu from '../components/Menu'
 
@@ -16,7 +16,8 @@ const mapDispatchToProps = (dispatch, props) => ({
     dispatch(communitySelected(communityName))
     dispatch(handleMessagesThunk(communityName))
     dispatch(getSpaceThunk(communityName))
-  })
+  }),
+  getTrends: () => dispatch(getCommunitiesTrendsThunk())
 })
 
 const mapStateToProps = (state) => ({
@@ -25,6 +26,7 @@ const mapStateToProps = (state) => ({
   myCommunities: state.getIn(['user', 'myCommunities']),
   loading: state.getIn(['community', 'loading']),
   communitySelected: state.getIn(['community', 'communitySelected', 'name']),
+  trends: state.getIn(['community', 'trends']),
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

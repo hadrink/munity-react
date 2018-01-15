@@ -56,7 +56,7 @@ class MunitySpace extends React.Component {
         </Dimmer>
         <Header as='h3'>{this.props.communityName + ' Space' }</Header>
         <Segment basic floated style={{ padding: 0 }}>
-          <Comment.Group style={{ height: `${this.state.height - 138 }px`, width: '100%', overflowY: 'scroll', maxWidth: 'none' }}>
+          <Comment.Group style={{ height: `${this.state.height - 138 }px`, width: '100%', overflowY: 'auto', maxWidth: 'none' }}>
 
             {this.props.space.toJS().map((message, id) => (
               <Comment>
@@ -77,7 +77,7 @@ class MunitySpace extends React.Component {
             <Form.Input
               disabled={!this.props.token}
               style={{ width: '100%' }}
-              action={{ color: 'red', labelPosition: 'right', icon: 'copy', content: 'Send', onClick: (e) => { this.handleSubmit() } }}
+              action={{ style: { backgroundColor: '#FFB88C', color: '#FFF' }, labelPosition: 'right', icon: 'send', content: 'Send', onClick: (e) => { this.handleSubmit() } }}
               placeholder='Send a message...'
               onChange={(e) => this.handleInputChange(e)}
             />

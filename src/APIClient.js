@@ -1,3 +1,5 @@
+import querystring from 'query-string'
+
 export default class APIClient {
 
   getBaseURI (protocol = 'http') {
@@ -193,6 +195,54 @@ export default class APIClient {
         method: 'PATCH',
         mode: 'cors',
         body: JSON.stringify({ message }),
+      })
+      .then((response) => {
+        if (response.ok) {
+          response.text().then(data => resolve(data))
+        } else {
+          response.text().then(error => reject(JSON.parse(error)))
+        }
+      })
+      .catch(error => {
+        console.error(error)
+        reject(error)
+      })
+    })
+  }
+  getCommunitiesTrends () {
+    return new Promise((resolve, reject) => {
+      const querystringParams = querystring.stringify({ limit: 10 })
+      const baseURL = `${this.getBaseURI()}/v1/communities?${querystringParams}`
+      const headers = this.defaultHeaders()
+
+      return fetch((baseURL), {
+        headers,
+        method: 'GET',
+        mode: 'cors',
+      })
+      .then((response) => {
+        if (response.ok) {
+          response.text().then(data => resolve(data))
+        } else {
+          response.text().then(error => reject(JSON.parse(error)))
+        }
+      })
+      .catch(error => {
+        console.error(error)
+        reject(error)
+      })
+    })
+  }
+  subscribeToCommunity ({ token, communityName }) {
+    return new Promise((resolve, reject) => {
+      const baseURL = `${this.getBaseURI()}/v1/subscriptions`
+      const headers = this.securedheaders(token)
+
+      return fetch((baseURL), {
+        headers,
+        method: 'POST',
+        mode: 'cors',
+        body: JSON.stringify({ communityName }),
       })
       .then((response) => {
         if (response.ok) {
