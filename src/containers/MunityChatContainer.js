@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { logout } from '../actions/user'
-import { sendMessageThunk, openSocketConnectionThunk, handleMessagesThunk, subscribeToCommunityThunk } from '../thunks/community'
+import { sendMessageThunk, openSocketConnectionThunk, handleMessagesThunk, subscribeToCommunityThunk, unsubscribeFromCommunityThunk } from '../thunks/community'
 
 import MunityChat from '../components/MunityChat'
 
@@ -10,7 +10,8 @@ import MunityChat from '../components/MunityChat'
 
 const mapDispatchToProps = (dispatch, props) => ({
   sendMessage: (communityName, username) => dispatch(sendMessageThunk(communityName, username)),
-  subscribe: (communityName) => dispatch(subscribeToCommunityThunk(communityName))
+  subscribe: (communityName) => dispatch(subscribeToCommunityThunk(communityName)),
+  unsubscribe: (communityName) => dispatch(unsubscribeFromCommunityThunk(communityName))
 })
 
 const mapStateToProps = (state) => ({

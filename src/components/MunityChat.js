@@ -44,8 +44,12 @@ class MunityChat extends React.Component {
     this.props.sendMessage(this.state.input)
   }
 
+  isSubscribed = () => {
+    return this.props.subscriptions.some((value) => value.name == this.props.communityName)
+  }
+
   handleSubscription = () => {
-    this.props.subscribe(this.props.communityName)
+    this.isSubscribed() ? this.props.unsubscribe(this.props.communityName) : this.props.subscribe(this.props.communityName)
   }
 
   scrollToBottom() {
@@ -62,11 +66,13 @@ class MunityChat extends React.Component {
         <Button
           disabled={!this.props.token}
           size='mini'
-          style={{float: 'right', marginTop: '23px'}}
+          style={{float: 'right', marginTop: '23px', backgroundColor: '#FFB88C', color: '#FFF'}}
           as='a'
-          icon={this.props.subscriptions.some((value) => value.name == this.props.communityName) ? 'star' : 'empty star'}
+          icon
+          labelPosition='right'
           onClick={ () => this.handleSubscription() }
         >
+        {this.isSubscribed() ? 'Unsubscribe' : 'Subscribe' }<Icon name={this.isSubscribed() ? 'star' : 'empty star'} />
         </Button>
         <Segment basic floated style={{ padding: 0 }}>
           <Comment.Group style={{ height: `${this.state.height - 153 }px`, width: '100%', overflowY: 'auto', maxWidth: 'none' }}>

@@ -124,8 +124,9 @@ class MunityMenu extends React.Component {
           </Item>
           <div style={{ width: '100%', padding: '10px' }}>
             <Button
+              icon labelPosition='right'
               style={{ width: '100%' }}
-              onClick={() => { this.props.token ? this.props.logout() : this.openLoginModal() }}>{this.props.token ? 'Logout' : 'Login'}</Button>
+              onClick={() => { this.props.token ? this.props.logout() : this.openLoginModal() }}>{this.props.token ? 'Logout' : 'Login'}<Icon name={this.props.token ? 'sign out' : 'sign in'} /></Button>
           </div>
 
           {this.LoginModal()}

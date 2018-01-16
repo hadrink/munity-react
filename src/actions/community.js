@@ -37,6 +37,10 @@ export const SUBSCRIBE_TO_COMMUNITY = 'SUBSCRIBE_TO_COMMUNITY'
 export const SUBSCRIBE_TO_COMMUNITY_SUCCESS = 'SUBSCRIBE_TO_COMMUNITY_SUCCESS'
 export const SUBSCRIBE_TO_COMMUNITY_FAILURE = 'SUBSCRIBE_TO_COMMUNITY_FAILURE'
 
+export const UNSUBSCRIBE_FROM_COMMUNITY = 'UNSUBSCRIBE_FROM_COMMUNITY'
+export const UNSUBSCRIBE_FROM_COMMUNITY_SUCCESS = 'UNSUBSCRIBE_FROM_COMMUNITY_SUCCESS'
+export const UNSUBSCRIBE_FROM_COMMUNITY_FAILURE = 'UNSUBSCRIBE_FROM_COMMUNITY_FAILURE'
+
 export function getSubscriptions () {
   return {
     type: GET_SUBSCRIPTIONS
@@ -214,5 +218,23 @@ export function subscribeToCommunitySuccess (communities) {
 export function subscribeToCommunityFailure (error) {
   return {
     type: SUBSCRIBE_TO_COMMUNITY_FAILURE, error
+  }
+}
+
+export function unsubscribeFromCommunity () {
+  return {
+    type: UNSUBSCRIBE_FROM_COMMUNITY
+  }
+}
+
+export function unsubscribeFromCommunitySuccess (communities) {
+  return {
+    type: UNSUBSCRIBE_FROM_COMMUNITY_SUCCESS, communities
+  }
+}
+
+export function unsubscribeFromCommunityFailure (error) {
+  return {
+    type: UNSUBSCRIBE_FROM_COMMUNITY_FAILURE, error
   }
 }

@@ -24,6 +24,9 @@ import {
   SUBSCRIBE_TO_COMMUNITY,
   SUBSCRIBE_TO_COMMUNITY_SUCCESS,
   SUBSCRIBE_TO_COMMUNITY_FAILURE,
+  UNSUBSCRIBE_FROM_COMMUNITY,
+  UNSUBSCRIBE_FROM_COMMUNITY_SUCCESS,
+  UNSUBSCRIBE_FROM_COMMUNITY_FAILURE,
 } from '../actions/community'
 
 import { LOGOUT } from '../actions/user'
@@ -66,6 +69,12 @@ export default (state = initialState(), action) => {
     case SUBSCRIBE_TO_COMMUNITY_SUCCESS:
       return state.set('loading', false).set('subscriptions', action.communities)
     case SUBSCRIBE_TO_COMMUNITY_FAILURE:
+      return state.set('loading', false).set('error', action.error)
+    case UNSUBSCRIBE_FROM_COMMUNITY:
+      return state.set('loading', true)
+    case UNSUBSCRIBE_FROM_COMMUNITY_SUCCESS:
+      return state.set('loading', false).set('subscriptions', action.communities)
+    case UNSUBSCRIBE_FROM_COMMUNITY_FAILURE:
       return state.set('loading', false).set('error', action.error)
     case CREATE_COMMUNITY:
       return state.set('isCreating', true)

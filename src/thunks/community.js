@@ -27,6 +27,9 @@ import {
   subscribeToCommunity,
   subscribeToCommunitySuccess,
   subscribeToCommunityFailure,
+  unsubscribeFromCommunity,
+  unsubscribeFromCommunitySuccess,
+  unsubscribeFromCommunityFailure,
 } from '../actions/community'
 
 export function getSubscriptionsThunk () {
@@ -235,6 +238,27 @@ export function subscribeToCommunityThunk (communityName) {
         })
         .catch((e) => {
           dispatch(subscribeToCommunityFailure(e))
+          reject(e)
+        })
+    })
+  }
+}
+
+export function unsubscribeFromCommunityThunk (communityName) {
+  return (dispatch, getState, apiClient) => {
+    return new Promise((resolve, reject) => {
+      const state = getState()
+      const token = state.getIn(['context', 'token'])
+      dispatch(unsubscribeFromCommunity())
+
+      apiClient.unsubscribeFromCommunity({ token, communityName })
+        .then(data => {
+          const { subscriptions } = JSON.parse(data)
+          dispatch(unsubscribeFromCommunitySuccess(List(subscriptions)))
+          resolve()
+        })
+        .catch((e) => {
+          dispatch(unsubscribeFromCommunityFailure(e))
           reject(e)
         })
     })

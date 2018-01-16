@@ -257,4 +257,27 @@ export default class APIClient {
       })
     })
   }
+  unsubscribeFromCommunity ({ token, communityName }) {
+    return new Promise((resolve, reject) => {
+      const baseURL = `${this.getBaseURI()}/v1/subscriptions/${communityName}`
+      const headers = this.securedheaders(token)
+
+      return fetch((baseURL), {
+        headers,
+        method: 'DELETE',
+        mode: 'cors',
+      })
+      .then((response) => {
+        if (response.ok) {
+          response.text().then(data => resolve(data))
+        } else {
+          response.text().then(error => reject(JSON.parse(error)))
+        }
+      })
+      .catch(error => {
+        console.error(error)
+        reject(error)
+      })
+    })
+  }
 }
