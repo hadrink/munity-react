@@ -10,7 +10,7 @@ import LoginRegister from '../components/LoginRegister'
     implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = (dispatch, props) => ({
-  register: (username, email, password) => registerThunk(username, email, password),
+  register: (username, email, password) => dispatch(registerThunk(username, email, password)),
   login: (username, password) => dispatch(loginThunk(username, password))
   .then(() => {
     dispatch(getSubscriptionsThunk())

@@ -46,15 +46,18 @@ class MunitySpace extends React.Component {
 
   handleSubmit = () => {
     this.props.sendMessage(this.props.communityName, this.state.input)
+    this.setState({ input: '' })
   }
 
   render() {
+    const { communityName } = this.props
+
     return (
       <div>
         <Dimmer active={this.props.loading}>
           <Loader active={this.props.loading} />
         </Dimmer>
-        <Header as='h3'>{this.props.communityName + ' Space' }</Header>
+        <Header as='h3'>{communityName.charAt(0).toUpperCase() + communityName.slice(1) + ' Space'}</Header>
         <Segment basic floated style={{ padding: 0 }}>
           <Comment.Group style={{ height: `${this.state.height - 138 }px`, width: '100%', overflowY: 'auto', maxWidth: 'none' }}>
 

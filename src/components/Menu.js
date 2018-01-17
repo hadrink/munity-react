@@ -106,7 +106,7 @@ class MunityMenu extends React.Component {
               ))}
             </div>
           </Item>
-          <Item style={{ display: this.props.myCommunities.count() === 0 ? 'none' : 'block' }}>
+          <Item>
             <Link className='header' to='/#create-community' onClick={() => this.openCreateCommunityModal()}>Yours <Icon name='add circle' /></Link>
             <div className='menu'>
               {this.props.myCommunities.toJS().map(c => (

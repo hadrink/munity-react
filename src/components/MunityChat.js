@@ -42,6 +42,7 @@ class MunityChat extends React.Component {
 
   handleSubmit = () => {
     this.props.sendMessage(this.state.input)
+    this.setState({ input: '' })
   }
 
   isSubscribed = () => {
@@ -57,12 +58,14 @@ class MunityChat extends React.Component {
   }
 
   render() {
+    const { communityName, messages } = this.props
+
     return (
       <div>
         <Dimmer active={this.props.loading}>
           <Loader active={this.props.loading} />
         </Dimmer>
-        <Header as='h3' style={{display: 'inline-block'}}>{this.props.communityName}</Header>
+        <Header as='h3' style={{display: 'inline-block'}}>{communityName.charAt(0).toUpperCase() + communityName.slice(1)}</Header>
         <Button
           disabled={!this.props.token}
           size='mini'
@@ -77,12 +80,12 @@ class MunityChat extends React.Component {
         <Segment basic floated style={{ padding: 0 }}>
           <Comment.Group style={{ height: `${this.state.height - 153 }px`, width: '100%', overflowY: 'auto', maxWidth: 'none' }}>
 
-            {this.props.messages.map(message => (
+            {messages.map(message => (
               <Comment>
                 <Comment.Content>
-                  <Comment.Author as='a'>{message.username}</Comment.Author>
+                  <Comment.Author as='a'>{message.username.charAt(0).toUpperCase() + message.username.slice(1)}</Comment.Author>
                   <Comment.Metadata>
-                    <div>{moment().format("ddd LT")}</div>
+                    <div>{moment(message.date).fromNow()}</div>
                   </Comment.Metadata>
                   <Comment.Text>
                     <p>{message.message}</p>
