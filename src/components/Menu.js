@@ -42,6 +42,10 @@ class MunityMenu extends React.Component {
   )
 
   componentWillReceiveProps(nextProps) {
+    if (this.props.communityCreatedRecently != nextProps.communityCreatedRecently) {
+      this.closeCreateCommunityModal()
+    }
+
     if (nextProps.token && this.state.showLoginModal) {
       this.closeLoginModal()
     }

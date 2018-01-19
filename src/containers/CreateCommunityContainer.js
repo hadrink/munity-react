@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { createCommunityThunk } from '../thunks/community'
+import { getMyCommunitiesThunk } from '../thunks/user'
 
 import CreateCommunity from '../components/CreateCommunity'
 
@@ -7,9 +8,9 @@ import CreateCommunity from '../components/CreateCommunity'
     Keys will be passed as props to presentational components. Here we are
     implementing our wrapper around increment; the component doesn't care   */
 
-const mapDispatchToProps = {
-  createCommunity: (name) => createCommunityThunk(name),
-}
+const mapDispatchToProps = (dispatch, props) => ({
+  createCommunity: (name) => dispatch(createCommunityThunk(name)).then(() => dispatch(getMyCommunitiesThunk())),
+})
 
 const mapStateToProps = (state) => ({
   loading: state.getIn(['community', 'isCreating']),
