@@ -3,7 +3,7 @@ import querystring from 'query-string'
 export default class APIClient {
 
   getBaseURI (protocol = 'http') {
-    return `${protocol}://localhost:8080/api`
+    return `${protocol}://munity-api.herokuapp.com/api`
   }
 
   defaultHeaders () {
