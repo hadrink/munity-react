@@ -86,6 +86,7 @@ export default (state = initialState(), action) => {
       return state.setIn(['webSocket', 'isConnecting'], true)
     case OPEN_SOCKET_CONNECTION_SUCCESS:
       return state.setIn(['webSocket', 'isConnecting'], false).setIn(['webSocket', 'socket'], action.websocket)
+      .setIn(['communitySelected', 'messages'], List())
     case OPEN_SOCKET_CONNECTION_FAILURE:
       return state.setIn(['webSocket', 'isConnecting'], false).set('error', action.error)
     case GET_SPACE:
