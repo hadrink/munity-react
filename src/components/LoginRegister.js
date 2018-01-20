@@ -94,7 +94,7 @@ class LoginRegister extends React.Component {
                 />
                 <Button
                   disabled={this.registerFormIsInvalid()}
-                  loading={this.props.loading && !this.registerFormIsInvalid()}
+                  loading={this.props.isRegistering && !this.registerFormIsInvalid()}
                   type='submit'
                   onClick={() => { this.handleRegisterSubmit() }}>Submit
                 </Button>

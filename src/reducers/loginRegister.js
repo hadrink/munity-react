@@ -13,6 +13,7 @@ const initialState = () => {
   return Map({
     token: '',
     loading: false,
+    isRegistering: false,
     user: null,
     error: {
       identifier: '',
@@ -26,11 +27,11 @@ const initialState = () => {
 export default (state = initialState(), action) => {
   switch (action.type) {
     case REGISTER:
-      return state.set('loading', true)
+      return state.set('isRegistering', true)
     case REGISTER_SUCCESS:
-      return state.set('loading', false).set('user', action.user)
+      return state.set('isRegistering', false).set('user', action.user)
     case REGISTER_FAILURE:
-      return state.set('loading', false).set('error', action.error)
+      return state.set('isRegistering', false).set('error', action.error)
     case LOGIN:
       return state.set('loading', true)
     case LOGIN_SUCCESS:

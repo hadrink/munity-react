@@ -26,8 +26,7 @@ export function registerThunk (username, email, password) {
           const token = jsonData['access_token']
           const user = jsonData['user']
 
-          dispatch(registerSuccess(user))
-          dispatch(setToken(token))
+          dispatch(registerSuccess(token, user))
           resolve()
         })
         .catch((e) => {

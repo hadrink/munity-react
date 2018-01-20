@@ -21,6 +21,7 @@ const mapDispatchToProps = (dispatch, props) => ({
 
 const mapStateToProps = (state) => ({
   loading: state.getIn(['loginRegister', 'loading']),
+  isRegistering: state.getIn(['loginRegister', 'isRegistering']),
   user: state.getIn(['loginRegister', 'user']),
   error: state.getIn(['loginRegister', 'error'])
 })

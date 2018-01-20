@@ -20,9 +20,9 @@ export function register () {
   }
 }
 
-export function registerSuccess (user) {
+export function registerSuccess (token, user) {
   return {
-    type: REGISTER_SUCCESS, user
+    type: REGISTER_SUCCESS, token, user
   }
 }
 
