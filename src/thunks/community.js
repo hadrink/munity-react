@@ -30,6 +30,9 @@ import {
   unsubscribeFromCommunity,
   unsubscribeFromCommunitySuccess,
   unsubscribeFromCommunityFailure,
+  searchCommunities,
+  searchCommunitiesSuccess,
+  searchCommunitiesFailure,
 } from '../actions/community'
 
 export function getSubscriptionsThunk () {
@@ -259,6 +262,27 @@ export function unsubscribeFromCommunityThunk (communityName) {
         })
         .catch((e) => {
           dispatch(unsubscribeFromCommunityFailure(e))
+          reject(e)
+        })
+    })
+  }
+}
+
+export function searchCommunitiesThunk (communityName) {
+  return (dispatch, getState, apiClient) => {
+    return new Promise((resolve, reject) => {
+      const state = getState()
+      const token = state.getIn(['context', 'token'])
+      dispatch(searchCommunities())
+
+      apiClient.searchCommunities({ token, communityName })
+        .then(data => {
+          const communities = JSON.parse(data)
+          dispatch(searchCommunitiesSuccess(List(communities)))
+          resolve()
+        })
+        .catch((e) => {
+          dispatch(searchCommunitiesFailure(e))
           reject(e)
         })
     })

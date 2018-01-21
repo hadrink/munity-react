@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { logout } from '../actions/user'
 import { communitySelected } from '../actions/community'
-import { openSocketConnectionThunk, handleMessagesThunk, getSpaceThunk, getCommunitiesTrendsThunk } from '../thunks/community'
+import { openSocketConnectionThunk, handleMessagesThunk, getSpaceThunk, getCommunitiesTrendsThunk, searchCommunitiesThunk } from '../thunks/community'
 
 import MunityMenu from '../components/Menu'
 
@@ -17,7 +17,8 @@ const mapDispatchToProps = (dispatch, props) => ({
     dispatch(handleMessagesThunk(communityName))
     dispatch(getSpaceThunk(communityName))
   }),
-  getTrends: () => dispatch(getCommunitiesTrendsThunk())
+  getTrends: () => dispatch(getCommunitiesTrendsThunk()),
+  searchCommunities: (communityName) => dispatch(searchCommunitiesThunk(communityName)),
 })
 
 const mapStateToProps = (state) => ({
@@ -28,6 +29,9 @@ const mapStateToProps = (state) => ({
   communitySelected: state.getIn(['community', 'communitySelected', 'name']),
   trends: state.getIn(['community', 'trends']),
   communityCreatedRecently: state.getIn(['community', 'createdRecently']),
+  communitySearched: state.getIn(['community', 'searched', 'data']),
+  isFetching: state.getIn(['community', 'searched', 'isFetching']),
+  searchError: state.getIn(['community', 'searched', 'error']),
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

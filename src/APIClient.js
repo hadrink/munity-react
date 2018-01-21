@@ -280,4 +280,28 @@ export default class APIClient {
       })
     })
   }
+  searchCommunities ({ token, communityName }) {
+    return new Promise((resolve, reject) => {
+      const querystringParams = querystring.stringify({ name: communityName, limit: 10 })
+      const baseURL = `${this.getBaseURI()}/v1/communities/search?${querystringParams}`
+      const headers = this.defaultHeaders()
+
+      return fetch((baseURL), {
+        headers,
+        method: 'GET',
+        mode: 'cors',
+      })
+      .then((response) => {
+        if (response.ok) {
+          response.text().then(data => resolve(data))
+        } else {
+          response.text().then(error => reject(JSON.parse(error)))
+        }
+      })
+      .catch(error => {
+        console.error(error)
+        reject(error)
+      })
+    })
+  }
 }

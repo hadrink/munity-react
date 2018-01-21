@@ -27,6 +27,9 @@ import {
   UNSUBSCRIBE_FROM_COMMUNITY,
   UNSUBSCRIBE_FROM_COMMUNITY_SUCCESS,
   UNSUBSCRIBE_FROM_COMMUNITY_FAILURE,
+  SEARCH_COMMUNITIES,
+  SEARCH_COMMUNITIES_SUCCESS,
+  SEARCH_COMMUNITIES_FAILURE,
 } from '../actions/community'
 
 import { LOGOUT } from '../actions/user'
@@ -47,6 +50,11 @@ const initialState = () => {
       space: List(),
     }),
     trends: List(),
+    searched: Map({
+      isFetching: false,
+      data: List(),
+      error: null,
+    }),
     error: {
       identifier: '',
       reason: '',
@@ -101,6 +109,16 @@ export default (state = initialState(), action) => {
       return state.set('loading', false).set('trends', action.communities)
     case GET_COMMUNITIES_TRENDS_FAILURE:
       return state.set('loading', false).set('error', action.error)
+    case SEARCH_COMMUNITIES:
+      return state.setIn(['searched','isFetching'], true)
+    case SEARCH_COMMUNITIES_SUCCESS:
+      return state.setIn(['searched', 'data'], action.communities)
+      .setIn(['searched','isFetching'], false)
+      .setIn(['searched','error'], null)
+    case SEARCH_COMMUNITIES_FAILURE:
+      return state.setIn(['searched','isFetching'], false)
+      .setIn(['searched','error'], action.error)
+      .setIn(['searched','data'], List())
     case SEND_MESSAGE_IN_SPACE:
       return state.set('loading', true)
     case SEND_MESSAGE_IN_SPACE_SUCCESS:

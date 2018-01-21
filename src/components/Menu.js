@@ -17,6 +17,7 @@ class MunityMenu extends React.Component {
     showLoginModal: false,
     showCreateCommunityModal: false,
     visible: true,
+    searchValue: '',
   }
 
   componentDidMount() {
@@ -69,8 +70,17 @@ class MunityMenu extends React.Component {
 
   handleItemClick = (e, { name }) => this.props.activeCommunity(name)
 
+  handleSearchChange = (e, { value }) => {
+    this.setState({ searchValue: value })
+
+    setTimeout(() => {
+      if (this.state.searchValue.length < 1) return
+      this.props.searchCommunities(this.state.searchValue)
+    }, 500)
+  }
+
   render() {
-    const { communitySelected } = this.props
+    const { communitySelected, searchValue, communitySearched, isFetching, searchError } = this.props
     return (
 
       <Sidebar.Pushable visible={this.props.isReady} as={Segment}>
@@ -86,6 +96,28 @@ class MunityMenu extends React.Component {
                   as={Link}
                   to={`/#${community.name}`}
                   name={community.name}
+                  active={communitySelected === community.name}
+                  onClick={this.handleItemClick}
+                >
+                  {community.name.charAt(0).toUpperCase() + community.name.slice(1)}
+                </Menu.Item>
+              ))}
+            </div>
+          </Item>
+          <Item>
+            <div className='header'>Search</div>
+            <Input
+              loading={isFetching}
+              size='mini'
+              placeholder='Commuity name...'
+              onChange={this.handleSearchChange}
+            />
+            <div className='menu'>
+              {searchError ? <Menu.Item>Not resusts found</Menu.Item> : communitySearched.map(community => (
+                <Menu.Item
+                  as={Link}
+                  name={community.name}
+                  to={`/#${community.name}`}
                   active={communitySelected === community.name}
                   onClick={this.handleItemClick}
                 >
@@ -126,7 +158,7 @@ class MunityMenu extends React.Component {
               ))}
             </div>
           </Item>
-          <div style={{ width: '100%', padding: '10px' }}>
+          <div style={{ width: '100%', padding: '15px' }}>
             <Button
               icon labelPosition='right'
               style={{ width: '100%' }}
