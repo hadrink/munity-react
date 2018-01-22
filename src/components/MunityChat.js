@@ -95,7 +95,7 @@ class MunityChat extends React.Component {
             ))}
             <div style={{float: 'left', clear: 'both'}} ref={(el) => { this.messagesEnd = el }}></div>
           </Comment.Group>
-          <Form style={{marginBottom: '15px'}}>
+          <Form style={{marginBottom: '15px'}} onSubmit={(e) => e.target.reset()}>
             <Form.Input
               disabled={!this.props.token}
               style={{ width: '100%' }}
