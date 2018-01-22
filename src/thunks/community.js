@@ -153,6 +153,7 @@ export function openSocketConnectionThunk () {
 
       apiClient.openSocketConnection()
         .then(websocket => {
+          console.log(websocket)
           dispatch(openSocketConnectionSuccess(websocket))
           resolve()
       })
@@ -160,6 +161,22 @@ export function openSocketConnectionThunk () {
         dispatch(openSocketConnectionFailure(e))
         reject(e)
       })
+    })
+  }
+}
+
+export function closeSocketConnectionThunk () {
+  return (dispatch, getState, apiClient) => {
+    return new Promise((resolve, reject) => {
+      const state = getState()
+      const ws = state.getIn(['community', 'webSocket', 'socket'])
+
+      if (ws) {
+        ws.close()
+        dispatch(closeSocketConnection())
+      }
+
+      resolve()
     })
   }
 }

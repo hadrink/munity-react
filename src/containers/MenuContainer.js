@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { logout } from '../actions/user'
 import { communitySelected } from '../actions/community'
-import { openSocketConnectionThunk, handleMessagesThunk, getSpaceThunk, getCommunitiesTrendsThunk, searchCommunitiesThunk } from '../thunks/community'
+import { openSocketConnectionThunk, handleMessagesThunk, getSpaceThunk, getCommunitiesTrendsThunk, searchCommunitiesThunk, closeSocketConnectionThunk } from '../thunks/community'
 
 import MunityMenu from '../components/Menu'
 
@@ -10,7 +10,9 @@ import MunityMenu from '../components/Menu'
     implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = (dispatch, props) => ({
-  logout: () => dispatch(logout()),
+  logout: () => dispatch(closeSocketConnectionThunk()).then(() => {
+    dispatch(logout())
+  }),
   activeCommunity: (communityName) => dispatch(openSocketConnectionThunk())
   .then(() => {
     dispatch(communitySelected(communityName))
