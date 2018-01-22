@@ -50,6 +50,14 @@ class MunityMenu extends React.Component {
     if (nextProps.token && this.state.showLoginModal) {
       this.closeLoginModal()
     }
+
+    const authorizationError = "Authentication.AuthenticationError.noAuthorizationHeader"
+    const { communityError, userError } = nextProps
+
+    if ((communityError.identifier == authorizationError || userError.identifier == authorizationError) && !this.state.showLoginModal) {
+      this.props.logout()
+      this.openLoginModal()
+    }
   }
 
   openLoginModal = () => {
@@ -113,7 +121,7 @@ class MunityMenu extends React.Component {
               onChange={this.handleSearchChange}
             />
             <div className='menu'>
-              {searchError ? <Menu.Item>Not resusts found</Menu.Item> : communitySearched.map(community => (
+              {searchError ? <Menu.Item>{ searchError.reason }</Menu.Item> : communitySearched.map(community => (
                 <Menu.Item
                   as={Link}
                   name={community.name}
@@ -170,7 +178,7 @@ class MunityMenu extends React.Component {
 
         </Sidebar>
         <Sidebar.Pusher style={{ 'padding-right' : '260px' }}>
-          <Grid columns={2} divided style={{ margin: 0 }}>
+          { communitySelected ? <Grid columns={2} divided style={{ margin: 0 }}>
             <Grid.Row style={{ padding: 0 }}>
               <Grid.Column width={10}>
                 <MunityChat />
@@ -179,7 +187,12 @@ class MunityMenu extends React.Component {
                 <MunitySpace />
               </Grid.Column>
             </Grid.Row>
-          </Grid>
+          </Grid> :
+          <Container text textAlign='center' style={{ marginTop: '50px' }}>
+            <Header as='h2'>Welcome to Munity</Header>
+            <p>Please select a community or create a new one.</p>
+          </Container>
+        }
         </Sidebar.Pusher>
       </Sidebar.Pushable>
     )
