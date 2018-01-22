@@ -34,6 +34,8 @@ const mapStateToProps = (state) => ({
   communitySearched: state.getIn(['community', 'searched', 'data']),
   isFetching: state.getIn(['community', 'searched', 'isFetching']),
   searchError: state.getIn(['community', 'searched', 'error']),
+  communityError: state.getIn(['community', 'error']),
+  userError: state.getIn(['community', 'error']),
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

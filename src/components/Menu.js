@@ -1,7 +1,7 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Input, Button, Icon, Modal, Dimmer, Loader, Sidebar, Segment, Header, Item, Grid } from 'semantic-ui-react'
+import { Menu, Input, Button, Icon, Modal, Dimmer, Loader, Sidebar, Segment, Header, Item, Grid, Container } from 'semantic-ui-react'
 import { Link } from 'react-router'
 import LoginRegister from '../containers/LoginRegisterContainer'
 import CreateCommunity from '../containers/CreateCommunityContainer'
