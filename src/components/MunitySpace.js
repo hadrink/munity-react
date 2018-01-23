@@ -50,7 +50,7 @@ class MunitySpace extends React.Component {
   }
 
   render() {
-    const { communityName } = this.props
+    const { communityName, user, admin } = this.props
 
     return (
       <div>
@@ -76,10 +76,10 @@ class MunitySpace extends React.Component {
             ))}
             <div ref={(el) => { this.messagesEnd = el }}></div>
           </Comment.Group>
-          <Form style={{marginBottom: '15px'}}>
+          <Form style={{marginBottom: '15px', display: user == admin ? 'block' : 'none'}}>
             <Form.Input
               disabled={!this.props.token}
-              style={{ width: '100%' }}
+              style={{ width: '100%'}}
               action={{ style: { backgroundColor: '#FFB88C', color: '#FFF' }, labelPosition: 'right', icon: 'send', content: 'Send', onClick: (e) => { this.handleSubmit() } }}
               placeholder='Send a message...'
               onChange={(e) => this.handleInputChange(e)}

@@ -85,7 +85,7 @@ export function sendMessageThunk (message) {
     return new Promise((resolve, reject) => {
       const state = getState()
       const ws = state.getIn(['community', 'webSocket', 'socket'])
-      const communityName = state.getIn(['community', 'communitySelected', 'name'])
+      const communityName = state.getIn(['community', 'communitySelected', 'community', 'name'])
       const token =  state.getIn(['context', 'token'])
 
       dispatch(sendMessage())
@@ -100,7 +100,7 @@ export function sendNotificationToServerThunk (notification) {
     return new Promise((resolve, reject) => {
       const state = getState()
       const ws = state.getIn(['community', 'webSocket', 'socket'])
-      const communityName = state.getIn(['community', 'communitySelected', 'name'])
+      const communityName = state.getIn(['community', 'communitySelected', 'community', 'name'])
       const token =  state.getIn(['context', 'token'])
 
       dispatch(sendNotificationToServer())
@@ -110,11 +110,11 @@ export function sendNotificationToServerThunk (notification) {
   }
 }
 
-export function handleMessagesThunk (communityName, token) {
+export function handleMessagesThunk () {
   return (dispatch, getState, apiClient) => {
     const state = getState()
     const ws = state.getIn(['community', 'webSocket', 'socket'])
-    const communityName = state.getIn(['community', 'communitySelected', 'name'])
+    const communityName = state.getIn(['community', 'communitySelected', 'community', 'name'])
     const token =  state.getIn(['context', 'token'])
 
     dispatch(joinCommunityRoom(communityName))
@@ -153,7 +153,6 @@ export function openSocketConnectionThunk () {
 
       apiClient.openSocketConnection()
         .then(websocket => {
-          console.log(websocket)
           dispatch(openSocketConnectionSuccess(websocket))
           resolve()
       })

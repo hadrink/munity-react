@@ -141,15 +141,15 @@ export function closeSocketConnectionFailure (message) {
   }
 }
 
-export function communitySelected (communityName) {
+export function communitySelected (community) {
   return {
-    type: COMMUNITY_SELECTED, communityName
+    type: COMMUNITY_SELECTED, community
   }
 }
 
-export function joinCommunityRoom (communityName) {
+export function joinCommunityRoom (community) {
   return {
-    type: JOIN_COMMUNITY_ROOM, communityName
+    type: JOIN_COMMUNITY_ROOM, community
   }
 }
 

@@ -76,7 +76,9 @@ class MunityMenu extends React.Component {
     this.setState({ 'showCreateCommunityModal': false })
   }
 
-  handleItemClick = (e, { name }) => this.props.activeCommunity(name)
+  handleItemClick = (community) => {
+    this.props.activeCommunity(community)
+  }
 
   handleSearchChange = (e, { value }) => {
     this.setState({ searchValue: value })
@@ -105,7 +107,7 @@ class MunityMenu extends React.Component {
                   to={`/#${community.name}`}
                   name={community.name}
                   active={communitySelected === community.name}
-                  onClick={this.handleItemClick}
+                  onClick={() => this.handleItemClick(community)}
                 >
                   {community.name.charAt(0).toUpperCase() + community.name.slice(1)}
                 </Menu.Item>
@@ -127,7 +129,7 @@ class MunityMenu extends React.Component {
                   name={community.name}
                   to={`/#${community.name}`}
                   active={communitySelected === community.name}
-                  onClick={this.handleItemClick}
+                  onClick={() => this.handleItemClick(community)}
                 >
                   {community.name.charAt(0).toUpperCase() + community.name.slice(1)}
                 </Menu.Item>
@@ -143,7 +145,7 @@ class MunityMenu extends React.Component {
                   name={sub.name}
                   to={`/#${sub.name}`}
                   active={communitySelected === sub.name}
-                  onClick={this.handleItemClick}
+                  onClick={() => this.handleItemClick(community)}
                 >
                   {sub.name.charAt(0).toUpperCase() + sub.name.slice(1)}
                 </Menu.Item>
@@ -153,13 +155,13 @@ class MunityMenu extends React.Component {
           <Item>
             <Link className='header' to='/#create-community' onClick={() => this.openCreateCommunityModal()}>Yours <Icon name='add circle' /></Link>
             <div className='menu'>
-              {this.props.myCommunities.toJS().map(c => (
+              {this.props.myCommunities.map(c => (
                 <Menu.Item
                   as={Link}
                   name={c.name}
                   to={`/#${c.name}`}
                   active={communitySelected === c.name}
-                  onClick={this.handleItemClick}
+                  onClick={() => this.handleItemClick(c)}
                 >
                   {c.name.charAt(0).toUpperCase() + c.name.slice(1)}
                 </Menu.Item>

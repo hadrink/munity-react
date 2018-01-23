@@ -13,11 +13,11 @@ const mapDispatchToProps = (dispatch, props) => ({
   logout: () => dispatch(closeSocketConnectionThunk()).then(() => {
     dispatch(logout())
   }),
-  activeCommunity: (communityName) => dispatch(openSocketConnectionThunk())
+  activeCommunity: (community) => dispatch(openSocketConnectionThunk())
   .then(() => {
-    dispatch(communitySelected(communityName))
-    dispatch(handleMessagesThunk(communityName))
-    dispatch(getSpaceThunk(communityName))
+    dispatch(communitySelected(community))
+    dispatch(handleMessagesThunk(community.name))
+    dispatch(getSpaceThunk(community.name))
   }),
   getTrends: () => dispatch(getCommunitiesTrendsThunk()),
   searchCommunities: (communityName) => dispatch(searchCommunitiesThunk(communityName)),
@@ -28,7 +28,7 @@ const mapStateToProps = (state) => ({
   subscriptions: state.getIn(['community', 'subscriptions']),
   myCommunities: state.getIn(['user', 'myCommunities']),
   loading: state.getIn(['community', 'loading']),
-  communitySelected: state.getIn(['community', 'communitySelected', 'name']),
+  communitySelected: state.getIn(['community', 'communitySelected', 'community', 'name']),
   trends: state.getIn(['community', 'trends']),
   communityCreatedRecently: state.getIn(['community', 'createdRecently']),
   communitySearched: state.getIn(['community', 'searched', 'data']),

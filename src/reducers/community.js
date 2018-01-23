@@ -11,7 +11,6 @@ import {
   OPEN_SOCKET_CONNECTION_FAILURE,
   MESSAGE_RECEIVED,
   COMMUNITY_SELECTED,
-  JOIN_COMMUNITY_ROOM,
   GET_SPACE,
   GET_SPACE_SUCCESS,
   GET_SPACE_FAILURE,
@@ -45,7 +44,9 @@ const initialState = () => {
       socket: null
     }),
     communitySelected: Map({
-      name: '',
+      community: Map({
+        name: ''
+      }),
       messages: List(),
       space: List(),
     }),
@@ -129,9 +130,7 @@ export default (state = initialState(), action) => {
       const newMessages = state.getIn(['communitySelected', 'messages']).push(action.messages)
       return state.setIn(['communitySelected', 'messages'], newMessages)
     case COMMUNITY_SELECTED:
-      return state.setIn(['communitySelected', 'name'], action.communityName)
-    case JOIN_COMMUNITY_ROOM:
-      return state.setIn(['communitySelected', 'name'], action.communityName)
+      return state.setIn(['communitySelected', 'community'], Map(action.community))
     case LOGOUT:
       return initialState()
   }

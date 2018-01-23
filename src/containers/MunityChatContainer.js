@@ -17,7 +17,7 @@ const mapDispatchToProps = (dispatch, props) => ({
 const mapStateToProps = (state) => ({
   token: state.getIn(['context', 'token']),
   messages: state.getIn(['community', 'communitySelected', 'messages']),
-  communityName: state.getIn(['community', 'communitySelected', 'name']),
+  communityName: state.getIn(['community', 'communitySelected', 'community', 'name']),
   loading: state.getIn(['community', 'webSocket', 'isConnecting']),
   subscriptions: state.getIn(['community', 'subscriptions']),
 })

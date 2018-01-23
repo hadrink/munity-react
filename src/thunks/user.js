@@ -11,7 +11,7 @@ import {
   setToken,
 } from '../actions/user'
 
-import { List } from 'immutable'
+import { List, Map } from 'immutable'
 
 export function registerThunk (username, email, password) {
   return (dispatch, getState, apiClient) => {
@@ -26,7 +26,7 @@ export function registerThunk (username, email, password) {
           const token = jsonData['access_token']
           const user = jsonData['user']
 
-          dispatch(registerSuccess(token, user))
+          dispatch(registerSuccess(token, Map({user})))
           resolve()
         })
         .catch((e) => {
@@ -47,7 +47,7 @@ export function loginThunk (username, password) {
           const jsonData = JSON.parse(data)
           const token = jsonData['access_token']
           const user = jsonData['user']
-          dispatch(loginSuccess(token, user))
+          dispatch(loginSuccess(token, Map({ user })))
           resolve()
         })
         .catch((e) => {
