@@ -64,9 +64,9 @@ class MunitySpace extends React.Component {
             {this.props.space.toJS().map((message, id) => (
               <Comment>
                 <Comment.Content>
-                  <Comment.Author as='a'>{message.username}</Comment.Author>
+                  <Comment.Author as='a'>{message.username.charAt(0).toUpperCase() + message.username.slice(1)}</Comment.Author>
                   <Comment.Metadata>
-                    <div>{moment(message.date.$date).format("ddd LT")}</div>
+                    <div>{moment(message.date.$date).fromNow()}</div>
                   </Comment.Metadata>
                   <Comment.Text>
                     <p>{message.content}</p>
@@ -76,7 +76,7 @@ class MunitySpace extends React.Component {
             ))}
             <div ref={(el) => { this.messagesEnd = el }}></div>
           </Comment.Group>
-          <Form style={{marginBottom: '15px', display: user == admin ? 'block' : 'none'}}>
+          <Form style={{marginBottom: '15px', display: user == admin ? 'block' : 'none'}} onSubmit={ (e) => e.target.reset() }>
             <Form.Input
               disabled={!this.props.token}
               style={{ width: '100%'}}
