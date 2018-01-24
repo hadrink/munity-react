@@ -12,6 +12,14 @@ class App extends React.Component {
     }
   }
 
+  componentDidMount() {
+    window.addEventListener("resize", this.browserSizeChanged)
+  }
+
+  browserSizeChanged = () => {
+    this.props.browserSizeChanged(window.innerWidth, window.innerHeight)
+  }
+
   render() {
     const { activeItem } = this.state
 

@@ -14,6 +14,8 @@ export const SET_TOKEN = 'SET_TOKEN'
 export const RESET_LOGIN_REGISTER = 'RESET_LOGIN_REGISTER'
 export const LOGOUT = 'LOGOUT'
 
+export const BROWSER_SIZE_CHANGED = 'BROWSER_SIZE_CHANGED'
+
 export function register () {
   return {
     type: REGISTER
@@ -83,5 +85,11 @@ export function resetLoginRegister () {
 export function logout () {
   return {
     type: LOGOUT
+  }
+}
+
+export function browserSizeChanged (width, height) {
+  return {
+    type: BROWSER_SIZE_CHANGED, width, height
   }
 }

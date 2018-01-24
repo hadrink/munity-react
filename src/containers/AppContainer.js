@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { registerThunk } from '../thunks/user'
+import { browserSizeChanged } from '../actions/user'
 
 import App from '../components/App'
 
@@ -9,6 +10,7 @@ import App from '../components/App'
 
 const mapDispatchToProps = {
   register: (username, email, password) => registerThunk(username, email, password),
+  browserSizeChanged: (width, height) => browserSizeChanged(width, height),
 }
 
 const mapStateToProps = (state) => ({
