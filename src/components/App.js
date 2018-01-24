@@ -13,6 +13,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    this.props.browserSizeChanged(window.innerWidth, window.innerHeight)
     window.addEventListener("resize", this.browserSizeChanged)
   }
 

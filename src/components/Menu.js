@@ -1,12 +1,12 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Menu, Input, Button, Icon, Modal, Dimmer, Loader, Sidebar, Segment, Header, Item, Grid, Container } from 'semantic-ui-react'
+import { Button, Icon, Modal, Sidebar, Segment, Header, Grid, Container } from 'semantic-ui-react'
 import { Link } from 'react-router'
-import LoginRegister from '../containers/LoginRegisterContainer'
-import CreateCommunity from '../containers/CreateCommunityContainer'
 import MunityChat from '../containers/MunityChatContainer'
 import MunitySpace from '../containers/MunitySpaceContainer'
+import SidebarMenu from './SidebarMenu'
+import SidebarMenuMobile from './SidebarMenuMobile'
 
 class MunityMenu extends React.Component {
   constructor(props) {
@@ -23,24 +23,6 @@ class MunityMenu extends React.Component {
   componentDidMount() {
     this.props.getTrends()
   }
-
-  LoginModal = () => (
-    <Modal open={this.state.showLoginModal} onClose={() => { this.closeLoginModal() }}>
-      <Modal.Header>Login / Register</Modal.Header>
-      <Modal.Content>
-        <LoginRegister />
-      </Modal.Content>
-    </Modal>
-  )
-
-  CreateCommunityModal = () => (
-    <Modal size='tiny' open={this.state.showCreateCommunityModal} onClose={() => { this.closeCreateCommunityModal() }}>
-      <Modal.Header>Create community</Modal.Header>
-      <Modal.Content>
-        <CreateCommunity />
-      </Modal.Content>
-    </Modal>
-  )
 
   componentWillReceiveProps(nextProps) {
     if (this.props.communityCreatedRecently != nextProps.communityCreatedRecently) {
@@ -76,7 +58,16 @@ class MunityMenu extends React.Component {
     this.setState({ 'showCreateCommunityModal': false })
   }
 
+  openMenu = () => {
+    this.setState({ 'visible': true })
+  }
+
+  closeMenu = () => {
+    this.setState({ 'visible': false })
+  }
+
   handleItemClick = (community) => {
+    this.closeMenu()
     this.props.activeCommunity(community)
   }
 
@@ -94,108 +85,64 @@ class MunityMenu extends React.Component {
     return (
 
       <Sidebar.Pushable visible={this.props.isReady} as={Segment}>
-        <Sidebar as={Menu} animation='push' visible={this.state.visible} vertical inverted>
-          <Dimmer active={this.props.loading}>
-            <Loader active={this.props.loading} />
-          </Dimmer>
-          <Item>
-            <div className='header'>Trends</div>
-            <div className='menu'>
-              {this.props.trends.map(community => (
-                <Menu.Item
-                  as={Link}
-                  to={`/#${community.name}`}
-                  name={community.name}
-                  active={communitySelected === community.name}
-                  onClick={() => this.handleItemClick(community)}
-                >
-                  {community.name.charAt(0).toUpperCase() + community.name.slice(1)}
-                </Menu.Item>
-              ))}
-            </div>
-          </Item>
-          <Item>
-            <div className='header'>Search</div>
-            <Input
-              loading={isFetching}
-              size='mini'
-              placeholder='Commuity name...'
-              onChange={this.handleSearchChange}
-            />
-            <div className='menu'>
-              {searchError ? <Menu.Item>{ searchError.reason }</Menu.Item> : communitySearched.map(community => (
-                <Menu.Item
-                  as={Link}
-                  name={community.name}
-                  to={`/#${community.name}`}
-                  active={communitySelected === community.name}
-                  onClick={() => this.handleItemClick(community)}
-                >
-                  {community.name.charAt(0).toUpperCase() + community.name.slice(1)}
-                </Menu.Item>
-              ))}
-            </div>
-          </Item>
-          <Item style={{ display: this.props.subscriptions.count() === 0 ? 'none' : 'block' }}>
-            <div className='header'>Subscriptions</div>
-            <div className='menu'>
-              {this.props.subscriptions.toJS().map(sub => (
-                <Menu.Item
-                  as={Link}
-                  name={sub.name}
-                  to={`/#${sub.name}`}
-                  active={communitySelected === sub.name}
-                  onClick={() => this.handleItemClick(community)}
-                >
-                  {sub.name.charAt(0).toUpperCase() + sub.name.slice(1)}
-                </Menu.Item>
-              ))}
-            </div>
-          </Item>
-          <Item>
-            <Link className='header' to='/#create-community' onClick={() => this.openCreateCommunityModal()}>Yours <Icon name='add circle' /></Link>
-            <div className='menu'>
-              {this.props.myCommunities.map(c => (
-                <Menu.Item
-                  as={Link}
-                  name={c.name}
-                  to={`/#${c.name}`}
-                  active={communitySelected === c.name}
-                  onClick={() => this.handleItemClick(c)}
-                >
-                  {c.name.charAt(0).toUpperCase() + c.name.slice(1)}
-                </Menu.Item>
-              ))}
-            </div>
-          </Item>
-          <div style={{ width: '100%', padding: '15px' }}>
-            <Button
-              icon labelPosition='right'
-              style={{ width: '100%' }}
-              onClick={() => { this.props.token ? this.props.logout() : this.openLoginModal() }}>{this.props.token ? 'Logout' : 'Login'}<Icon name={this.props.token ? 'sign out' : 'sign in'} /></Button>
-          </div>
 
-          {this.LoginModal()}
-          {this.CreateCommunityModal()}
-
-        </Sidebar>
-        <Sidebar.Pusher style={{ 'padding-right' : '260px' }}>
-          { communitySelected ? <Grid columns={2} divided style={{ margin: 0 }}>
-            <Grid.Row style={{ padding: 0 }}>
-              <Grid.Column width={10}>
-                <MunityChat />
-              </Grid.Column>
-              <Grid.Column width={6}>
-                <MunitySpace />
-              </Grid.Column>
-            </Grid.Row>
-          </Grid> :
-          <Container text textAlign='center' style={{ marginTop: '50px' }}>
-            <Header as='h2'>Welcome to Munity</Header>
-            <p>Please select a community or create a new one.</p>
-          </Container>
+        {this.props.screenType == 'desktop' ? <SidebarMenu
+          { ...this.props }
+          { ...this.state }
+          openLoginModal={this.openLoginModal}
+          closeLoginModal={this.closeLoginModal}
+          openCreateCommunityModal={this.openCreateCommunityModal}
+          closeCreateCommunityModal={this.closeCreateCommunityModal}
+          handleItemClick={this.handleItemClick}
+          handleSearchChange={this.handleSearchChange}
+        />
+          :
+          <SidebarMenuMobile
+            { ...this.props }
+            { ...this.state }
+            openLoginModal={this.openLoginModal}
+            closeLoginModal={this.closeLoginModal}
+            openCreateCommunityModal={this.openCreateCommunityModal}
+            closeCreateCommunityModal={this.closeCreateCommunityModal}
+            handleItemClick={this.handleItemClick}
+            handleSearchChange={this.handleSearchChange}
+          />
         }
+        {
+          this.props.screenType == 'desktop' ? <Sidebar.Pusher style={{ 'paddingRight': '260px' }}>
+            <div style={{ marginLeft: this.props.screenType != 'desktop' ? '40px' : '0px' }}>
+              {communitySelected ? <Grid columns={2} divided style={{ margin: 0 }}>
+                <Grid.Row style={{ padding: 0 }}>
+                  <Grid.Column width={10}>
+                    <MunityChat />
+                  </Grid.Column>
+                  <Grid.Column width={6}>
+                    <MunitySpace />
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid> :
+                <Container fluid textAlign='center' style={{ marginTop: '50px' }}>
+                  <Header as='h2'>Welcome to Munity</Header>
+                  <p>Please select a community or create a new one.</p>
+                </Container>
+              }
+            </div>
+          </Sidebar.Pusher> :
+            <Sidebar.Pusher>
+              <Button
+                icon
+                style={{ height: '100%', backgroundColor: 'white', position: 'fixed', display: this.props.screenType != 'desktop' ? 'block' : 'none', borderRadius: '0px', borderRight: '1px solid #de6262' }}
+                onClick={() => this.state.visible ? this.closeMenu() : this.openMenu()}
+              >
+                <Icon style={{ color: '#de6262' }} name='content' />
+              </Button>
+              <Container fluid textAlign='center' style={{ marginTop: '50px' }}>
+                <Header as='h2'>Welcome to Munity</Header>
+                <p>Please select a community or create a new one.</p>
+              </Container>
+              }
         </Sidebar.Pusher>
+        }
       </Sidebar.Pushable>
     )
   }
