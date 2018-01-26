@@ -20,6 +20,7 @@ const mapStateToProps = (state) => ({
   communityName: state.getIn(['community', 'communitySelected', 'community', 'name']),
   loading: state.getIn(['community', 'webSocket', 'isConnecting']),
   subscriptions: state.getIn(['community', 'subscriptions']),
+  screenType: state.getIn(['app', 'window', 'type']),
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

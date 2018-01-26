@@ -50,7 +50,7 @@ class MunitySpace extends React.Component {
   }
 
   render() {
-    const { communityName, user, admin } = this.props
+    const { communityName, user, admin, screenType } = this.props
 
     return (
       <div>
@@ -59,7 +59,7 @@ class MunitySpace extends React.Component {
         </Dimmer>
         <Header as='h3'>{communityName.charAt(0).toUpperCase() + communityName.slice(1) + ' Space'}</Header>
         <Segment basic floated style={{ padding: 0 }}>
-          <Comment.Group style={{ height: `${this.state.height - 138 }px`, width: '100%', overflowY: 'auto', maxWidth: 'none' }}>
+          <Comment.Group style={{ height: `${screenType == 'desktop' ? this.state.height - 138 : this.state.height - 195 }px`, width: '100%', overflowY: 'auto', maxWidth: 'none' }}>
 
             {this.props.space.toJS().map((message, id) => (
               <Comment>

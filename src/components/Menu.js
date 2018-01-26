@@ -7,6 +7,8 @@ import MunityChat from '../containers/MunityChatContainer'
 import MunitySpace from '../containers/MunitySpaceContainer'
 import SidebarMenu from './SidebarMenu'
 import SidebarMenuMobile from './SidebarMenuMobile'
+import SidebarPusher from './SidebarPusher'
+import SidebarPusherMobile from './SidebarPusherMobile';
 
 class MunityMenu extends React.Component {
   constructor(props) {
@@ -109,39 +111,15 @@ class MunityMenu extends React.Component {
           />
         }
         {
-          this.props.screenType == 'desktop' ? <Sidebar.Pusher style={{ 'paddingRight': '260px' }}>
-            <div style={{ marginLeft: this.props.screenType != 'desktop' ? '40px' : '0px' }}>
-              {communitySelected ? <Grid columns={2} divided style={{ margin: 0 }}>
-                <Grid.Row style={{ padding: 0 }}>
-                  <Grid.Column width={10}>
-                    <MunityChat />
-                  </Grid.Column>
-                  <Grid.Column width={6}>
-                    <MunitySpace />
-                  </Grid.Column>
-                </Grid.Row>
-              </Grid> :
-                <Container fluid textAlign='center' style={{ marginTop: '50px' }}>
-                  <Header as='h2'>Welcome to Munity</Header>
-                  <p>Please select a community or create a new one.</p>
-                </Container>
-              }
-            </div>
-          </Sidebar.Pusher> :
-            <Sidebar.Pusher>
-              <Button
-                icon
-                style={{ height: '100%', backgroundColor: 'white', position: 'fixed', display: this.props.screenType != 'desktop' ? 'block' : 'none', borderRadius: '0px', borderRight: '1px solid #de6262' }}
-                onClick={() => this.state.visible ? this.closeMenu() : this.openMenu()}
-              >
-                <Icon style={{ color: '#de6262' }} name='content' />
-              </Button>
-              <Container fluid textAlign='center' style={{ marginTop: '50px' }}>
-                <Header as='h2'>Welcome to Munity</Header>
-                <p>Please select a community or create a new one.</p>
-              </Container>
-              }
-        </Sidebar.Pusher>
+          this.props.screenType == 'desktop' ?
+            <SidebarPusher communitySelected={ communitySelected } />
+          :
+            <SidebarPusherMobile
+              visible={ this.state.visible }
+              communitySelected={ communitySelected }
+              openMenu={ this.openMenu }
+              closeMenu={ this.closeMenu }
+            />
         }
       </Sidebar.Pushable>
     )

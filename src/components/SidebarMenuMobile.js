@@ -12,7 +12,7 @@ class SidebarMenuMobile extends React.Component {
   }
 
   LoginModal = () => (
-    <Modal open={this.props.showLoginModal} onClose={() => { this.props.closeLoginModal() }}>
+    <Modal open={this.props.showLoginModal} closeIcon onClose={() => { this.props.closeLoginModal() }}>
       <Modal.Header>Login / Register</Modal.Header>
       <Modal.Content>
         <LoginRegister />
@@ -21,7 +21,7 @@ class SidebarMenuMobile extends React.Component {
   )
 
   CreateCommunityModal = () => (
-    <Modal size='tiny' open={this.props.showCreateCommunityModal} onClose={() => { this.props.closeCreateCommunityModal() }}>
+    <Modal size='tiny' open={this.props.showCreateCommunityModal} closeIcon onClose={() => { this.props.closeCreateCommunityModal() }}>
       <Modal.Header>Create community</Modal.Header>
       <Modal.Content>
         <CreateCommunity />
@@ -30,7 +30,7 @@ class SidebarMenuMobile extends React.Component {
   )
 
   render() {
-    const { communitySelected, searchValue, communitySearched, isFetching, searchError } = this.props
+    const { communitySelected, searchValue, communitySearched, isFetching, searchError, handleSearchChange } = this.props
     return (
         <Sidebar style={{ boxShadow: 'none' }} size='thin' visible={this.props.visible} as={Menu} animation='push' vertical inverted>
           <Dimmer active={this.props.loading}>
@@ -58,7 +58,7 @@ class SidebarMenuMobile extends React.Component {
               loading={isFetching}
               size='mini'
               placeholder='Commuity name...'
-              onChange={this.handleSearchChange}
+              onChange={handleSearchChange}
             />
             <div className='menu'>
               {searchError ? <Menu.Item>{searchError.reason}</Menu.Item> : communitySearched.map(community => (

@@ -58,7 +58,7 @@ class MunityChat extends React.Component {
   }
 
   render() {
-    const { communityName, messages } = this.props
+    const { communityName, messages, screenType } = this.props
 
     return (
       <div>
@@ -78,7 +78,7 @@ class MunityChat extends React.Component {
         {this.isSubscribed() ? 'Unsubscribe' : 'Subscribe' }<Icon name={this.isSubscribed() ? 'star' : 'empty star'} />
         </Button>
         <Segment basic floated style={{ padding: 0 }}>
-          <Comment.Group style={{ height: `${this.state.height - 153 }px`, width: '100%', overflowY: 'auto', maxWidth: 'none' }}>
+          <Comment.Group style={{ height: `${screenType == 'desktop' ? this.state.height - 153 : this.state.height - 209 }px`, width: '100%', overflowY: 'auto', maxWidth: 'none' }}>
 
             {messages.map(message => (
               <Comment>

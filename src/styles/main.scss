@@ -6,6 +6,7 @@
 // Just remove them if they're not what you want
 
 $red-color: #DE6262;
+$red-color-light: rgba(222, 98, 98, 0.05);
 
 html {
   box-sizing: border-box;
@@ -36,6 +37,23 @@ html {
 .munity-menu.ui.secondary.vertical.menu .item.active {
   border-color: white;
   border-right-width: 5px;
+}
+
+.ui.menu {
+
+  .active.item {
+    background-color: $red-color;
+    color: white;
+  }
+
+  a.item.active:hover {
+    background-color: $red-color;
+    color: white;
+  }
+
+  a.item:hover {
+    background-color: $red-color-light;
+  }
 }
 
 html,
