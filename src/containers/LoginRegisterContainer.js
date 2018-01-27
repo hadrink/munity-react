@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { registerThunk, loginThunk, getMyCommunitiesThunk } from '../thunks/user'
-import { getSubscriptionsThunk } from '../thunks/community'
+import { getSubscriptionsThunk, openSocketConnectionThunk, handleMessagesThunk } from '../thunks/community'
 import { resetLoginRegister } from '../actions/user'
 
 import LoginRegister from '../components/LoginRegister'
@@ -15,6 +15,9 @@ const mapDispatchToProps = (dispatch, props) => ({
   .then(() => {
     dispatch(getSubscriptionsThunk())
     dispatch(getMyCommunitiesThunk())
+    dispatch(openSocketConnectionThunk()).then(() => {
+      dispatch(handleMessagesThunk())
+    })
   }),
   reset: () => resetLoginRegister()
 })

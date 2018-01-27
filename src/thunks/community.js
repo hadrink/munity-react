@@ -145,8 +145,7 @@ export function openSocketConnectionThunk () {
       const ws = state.getIn(['community', 'webSocket', 'socket'])
 
       if (ws) {
-        ws.close()
-        dispatch(closeSocketConnection())
+        dispatch(closeSocketConnectionThunk())
       }
 
       dispatch(openSocketConnection())
