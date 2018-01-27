@@ -3,6 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Input, Button, Icon, Segment, Header, Comment, Form, Dimmer, Loader } from 'semantic-ui-react'
 import moment from 'moment'
+import Linkify, { linkify } from 'react-linkify'
 
 class MunitySpace extends React.Component {
   constructor(props) {
@@ -69,7 +70,8 @@ class MunitySpace extends React.Component {
                     <div>{moment(message.date.$date).fromNow()}</div>
                   </Comment.Metadata>
                   <Comment.Text>
-                    <p>{message.content}</p>
+                    <p><Linkify properties={{target: '_blank' }}>{message.content}</Linkify></p>
+                    {console.log(linkify.match(message.content))}
                   </Comment.Text>
                 </Comment.Content>
               </Comment>
@@ -80,8 +82,8 @@ class MunitySpace extends React.Component {
             <Form.Input
               disabled={!this.props.token}
               style={{ width: '100%'}}
-              action={{ style: { backgroundColor: '#FFB88C', color: '#FFF' }, labelPosition: 'right', icon: 'send', content: 'Send', onClick: (e) => { this.handleSubmit() } }}
-              placeholder='Send a message...'
+              action={{ style: { backgroundColor: '#FFB88C', color: '#FFF' }, labelPosition: 'right', icon: 'share', content: 'Share', onClick: (e) => { this.handleSubmit() } }}
+              placeholder='Share something...'
               onChange={(e) => this.handleInputChange(e)}
             />
           </Form>

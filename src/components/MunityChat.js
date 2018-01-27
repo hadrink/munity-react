@@ -65,7 +65,7 @@ class MunityChat extends React.Component {
         <Dimmer active={this.props.loading}>
           <Loader active={this.props.loading} />
         </Dimmer>
-        <Header as='h3' style={{display: 'inline-block'}}>{communityName.charAt(0).toUpperCase() + communityName.slice(1)}</Header>
+        <Header as='h3' style={{display: 'inline-block'}}>{communityName.charAt(0).toUpperCase() + communityName.slice(1) + ' Chat'}</Header>
         <Button
           disabled={!this.props.token}
           size='mini'
