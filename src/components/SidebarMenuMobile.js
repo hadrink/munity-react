@@ -77,15 +77,15 @@ class SidebarMenuMobile extends React.Component {
           <Item style={{ display: this.props.subscriptions.count() === 0 ? 'none' : 'block' }}>
             <div className='header'>Subscriptions</div>
             <div className='menu'>
-              {this.props.subscriptions.toJS().map(sub => (
+              {this.props.subscriptions.toJS().map(community => (
                 <Menu.Item
                   as={Link}
-                  name={sub.name}
-                  to={`/#${sub.name}`}
-                  active={communitySelected === sub.name}
+                  name={community.name}
+                  to={`/#${community.name}`}
+                  active={communitySelected === community.name}
                   onClick={() => this.props.handleItemClick(community)}
                 >
-                  {sub.name.charAt(0).toUpperCase() + sub.name.slice(1)}
+                  {community.name.charAt(0).toUpperCase() + community.name.slice(1)}
                 </Menu.Item>
               ))}
             </div>
