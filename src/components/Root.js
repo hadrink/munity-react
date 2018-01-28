@@ -10,14 +10,24 @@ class Root extends React.Component {
     routes: PropTypes.object.isRequired,
   }
 
+  state = {
+    loaded: false
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({ loaded: true })
+    }, 250)
+  }
+
   shouldComponentUpdate() {
-    return false
+    return true
   }
 
   render() {
     return (
       <Provider store={this.props.store}>
-        <div style={{ height: '100%' }}>
+        <div style={{ height: '100%', opacity: this.state.loaded ? '1' : '0', transition: '0.5s'}}>
           <Router history={browserHistory} children={this.props.routes}>
             <Route path="/" component={AppContainer} />
           </Router>
