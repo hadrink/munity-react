@@ -58,7 +58,7 @@ export default class APIClient {
         if (response.ok) {
           response.text().then(data => resolve(data))
         } else {
-          reject(new Error(response.text(), response.status))
+          response.text().then(error => reject(JSON.parse(error)))
         }
       })
       .catch(error => {
