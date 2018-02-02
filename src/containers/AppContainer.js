@@ -1,6 +1,9 @@
 import { connect } from 'react-redux'
 import { registerThunk } from '../thunks/user'
 import { browserSizeChanged } from '../actions/user'
+import { updateLocales } from '../actions/app'
+import { updateIntl } from 'react-intl-redux'
+
 
 import App from '../components/App'
 
@@ -8,10 +11,23 @@ import App from '../components/App'
     Keys will be passed as props to presentational components. Here we are
     implementing our wrapper around increment; the component doesn't care   */
 
-const mapDispatchToProps = {
-  register: (username, email, password) => registerThunk(username, email, password),
-  browserSizeChanged: (width, height) => browserSizeChanged(width, height),
-}
+const mapDispatchToProps = (dispatch, props) => ({
+  register: (username, email, password) => dispatch(registerThunk(username, email, password)),
+  browserSizeChanged: (width, height) => dispatch(browserSizeChanged(width, height)),
+  handleLocales: () => dispatch(updateLocales()),
+  updateIntl: (locale) => {
+    const currentLocale = (dispatch, getState) => {
+      const state = getState()
+      const locales = state.get('locales')
+      dispatch(updateIntl({
+        locale: locale,
+        messages: locales[locale],
+      }))
+    }
+
+    dispatch(currentLocale)
+  }
+})
 
 const mapStateToProps = (state) => ({
   //token: state.getIn(['context', 'token'])

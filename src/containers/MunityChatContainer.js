@@ -21,6 +21,8 @@ const mapStateToProps = (state) => ({
   loading: state.getIn(['community', 'webSocket', 'isConnecting']),
   subscriptions: state.getIn(['community', 'subscriptions']),
   screenType: state.getIn(['app', 'window', 'type']),
+  localized: state.get('intl')['messages']['chat'] || {},
+  locale: state.get('intl')['locale'],
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

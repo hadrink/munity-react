@@ -26,8 +26,8 @@ class SidebarPusher extends React.Component {
           </Grid.Row>
         </Grid> :
           <Container fluid textAlign='center' style={{ marginTop: '50px' }}>
-            <Header as='h2'>Welcome to Munity</Header>
-            <p>Please select a community or create a new one.</p>
+            <Header as='h2'>{ this.props.localized['Welcome'] }</Header>
+            <p>{ this.props.localized['WelcomeMessage'] }</p>
           </Container>
         }
       </Sidebar.Pusher>

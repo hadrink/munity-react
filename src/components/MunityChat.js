@@ -3,6 +3,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Input, Button, Icon, Segment, Header, Comment, Form, Dimmer, Loader } from 'semantic-ui-react'
 import moment from 'moment'
+import Lottie from 'react-lottie';
+import * as animationData from '../logo.json'
 
 class MunityChat extends React.Component {
   constructor(props) {
@@ -15,7 +17,18 @@ class MunityChat extends React.Component {
     height: 0,
   }
 
+  animationOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    prerender: true,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
+    }
+  }
+
   componentDidMount() {
+    moment.locale(this.props.locale)
     this.scrollToBottom()
     window.addEventListener("resize", this.updateDimensions)
   }
@@ -63,9 +76,13 @@ class MunityChat extends React.Component {
     return (
       <div>
         <Dimmer active={this.props.loading}>
-          <Loader active={this.props.loading} />
+          <Lottie options={this.animationOptions}
+              height={35}
+              width={70}
+              isStopped={!this.props.loading}
+          />
         </Dimmer>
-        <Header as='h3' style={{display: 'inline-block'}}>{communityName.charAt(0).toUpperCase() + communityName.slice(1) + ' Chat'}</Header>
+        <Header as='h3' style={{display: 'inline-block'}}>{communityName.charAt(0).toUpperCase() + communityName.slice(1) + ' ' + this.props.localized['Title']}</Header>
         <Button
           disabled={!this.props.token}
           size='mini'
@@ -75,7 +92,7 @@ class MunityChat extends React.Component {
           labelPosition='right'
           onClick={ () => this.handleSubscription() }
         >
-        {this.isSubscribed() ? 'Unsubscribe' : 'Subscribe' }<Icon name={this.isSubscribed() ? 'star' : 'empty star'} />
+        {this.isSubscribed() ? this.props.localized['Unsubscribe'] : this.props.localized['Subscribe'] }<Icon name={this.isSubscribed() ? 'star' : 'empty star'} />
         </Button>
         <Segment basic floated style={{ padding: 0 }}>
           <Comment.Group style={{ height: `${screenType == 'desktop' ? this.state.height - 153 : this.state.height - 209 }px`, width: '100%', overflowY: 'auto', maxWidth: 'none' }}>
@@ -99,8 +116,8 @@ class MunityChat extends React.Component {
             <Form.Input
               disabled={!this.props.token}
               style={{ width: '100%' }}
-              action={{ style: { backgroundColor: '#FFB88C', color: '#FFF' }, labelPosition: 'right', icon: 'send', content: 'Send', onClick: (e) => { this.handleSubmit() } }}
-              placeholder='Send a message...'
+              action={{ style: { backgroundColor: '#FFB88C', color: '#FFF' }, labelPosition: 'right', icon: 'send', content: this.props.localized['Send'], onClick: (e) => { this.handleSubmit() } }}
+              placeholder={ this.props.localized['SendMessage'] }
               onChange={(e) => this.handleInputChange(e)}
             />
           </Form>

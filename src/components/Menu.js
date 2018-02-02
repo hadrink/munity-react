@@ -112,13 +112,17 @@ class MunityMenu extends React.Component {
         }
         {
           this.props.screenType == 'desktop' ?
-            <SidebarPusher communitySelected={ communitySelected } />
+            <SidebarPusher
+              communitySelected={ communitySelected }
+              localized={ this.props.localized }
+            />
           :
             <SidebarPusherMobile
               visible={ this.state.visible }
               communitySelected={ communitySelected }
               openMenu={ this.openMenu }
               closeMenu={ this.closeMenu }
+              localized={ this.props.localized }
             />
         }
       </Sidebar.Pushable>

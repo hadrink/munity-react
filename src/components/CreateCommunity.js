@@ -25,16 +25,16 @@ class CreateCommunity extends React.Component {
   render () {
     return (
       <div>
-        <Message hidden={!this.props.error.reason} color='red'>{this.props.error.reason}</Message>
+        <Message hidden={!this.props.error.reason} color='red'>{ this.props.localized[this.props.error.identifier] }</Message>
         <Form>
           <Form.Input
-            placeholder='Name'
+            placeholder={ this.props.localized['Name'] }
             onChange={(e) => { this.setState({ 'name': e.target.value }) }}
           />
           <Button
             disabled={this.createCommunityFormIsInvalid()}
             type='submit'
-            onClick={() => { this.handleCreateCommunitySubmit() }}>Create
+            onClick={() => { this.handleCreateCommunitySubmit() }}>{ this.props.localized['Create'] }
                 </Button>
         </Form>
       </div>

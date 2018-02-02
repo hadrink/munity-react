@@ -26,7 +26,9 @@ const mapStateToProps = (state) => ({
   loading: state.getIn(['loginRegister', 'loading']),
   isRegistering: state.getIn(['loginRegister', 'isRegistering']),
   user: state.getIn(['loginRegister', 'user']),
-  error: state.getIn(['loginRegister', 'error'])
+  error: state.getIn(['loginRegister', 'error']),
+  loginMessages: state.get('intl')['messages']['login'] || {},
+  registerMessages: state.get('intl')['messages']['register'] || {},
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

@@ -1,13 +1,29 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <title>Munity</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
 <body>
   <div id="root" style="height: 100%">
-    <div style="background-color: green; height: 100%; width: 100%; position: absolute; top:0; left: 0;"></div>
+    <div style="background: linear-gradient(to right, #DE6262 , #FFB88C); height: 100%; width: 100%; position: absolute; top:0; left: 0;">
+      <div id="bm" style="position: relative; margin: 0 auto; width: 150px; top: 50%; margin-top: -50px;"></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/4.13.0/bodymovin.min.js"></script>
+    <script>
+      var animation = bodymovin.loadAnimation({
+        container: document.getElementById('bm'),
+        renderer: 'svg',
+        prerender: true,
+        loop: true,
+        autoplay: true,
+        path: 'logo.json'
+      })
+    </script>
   </div>
 </body>
+
 </html>

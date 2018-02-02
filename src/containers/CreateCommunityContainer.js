@@ -15,6 +15,8 @@ const mapDispatchToProps = (dispatch, props) => ({
 const mapStateToProps = (state) => ({
   loading: state.getIn(['community', 'isCreating']),
   error: state.getIn(['community', 'error']),
+  error: state.getIn(['community', 'error']),
+  localized: state.get('intl')['messages']['community'] || {},
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

@@ -15,6 +15,14 @@ class App extends React.Component {
   componentDidMount() {
     this.props.browserSizeChanged(window.innerWidth, window.innerHeight)
     window.addEventListener("resize", this.browserSizeChanged)
+    this.props.handleLocales()
+
+    const language = (navigator.languages && navigator.languages[0]) ||
+                     navigator.language ||
+                     navigator.userLanguage
+
+    const languageWithoutRegionCode = language.toLowerCase().split(/[_-]+/)[0]
+    this.props.updateIntl(languageWithoutRegionCode)
   }
 
   browserSizeChanged = () => {

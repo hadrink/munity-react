@@ -6,16 +6,27 @@ import { Menu, Input, Button, Icon, Modal, Dimmer, Loader, Sidebar, Header, Item
 import { Link } from 'react-router'
 import LoginRegister from '../containers/LoginRegisterContainer'
 import CreateCommunity from '../containers/CreateCommunityContainer'
-
+import Lottie from 'react-lottie';
+import * as animationData from '../logo.json'
 
 class SidebarMenu extends React.Component {
   constructor(props) {
     super(props)
   }
 
+  animationOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    prerender: true,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
+    }
+  }
+
   LoginModal = () => (
     <Modal open={this.props.showLoginModal} onClose={() => { this.props.closeLoginModal() }}>
-      <Modal.Header>Login / Register</Modal.Header>
+      <Modal.Header>{ this.props.localized['Login'] + ' / ' + this.props.localized['Register'] }</Modal.Header>
       <Modal.Content>
         <LoginRegister />
       </Modal.Content>
@@ -24,7 +35,7 @@ class SidebarMenu extends React.Component {
 
   CreateCommunityModal = () => (
     <Modal size='tiny' open={this.props.showCreateCommunityModal} onClose={() => { this.props.closeCreateCommunityModal() }}>
-      <Modal.Header>Create community</Modal.Header>
+      <Modal.Header>{ this.props.localized['Community'] }</Modal.Header>
       <Modal.Content>
         <CreateCommunity />
       </Modal.Content>
@@ -37,10 +48,14 @@ class SidebarMenu extends React.Component {
 
         <Sidebar visible as={Menu} animation='push' vertical inverted>
           <Dimmer active={this.props.loading}>
-            <Loader active={this.props.loading} />
+            <Lottie options={this.animationOptions}
+                height={35}
+                width={70}
+                isStopped={!this.props.loading}
+            />
           </Dimmer>
           <Item>
-            <div className='header'>Trends</div>
+            <div className='header'>{ this.props.localized['Trends'] }</div>
             <div className='menu'>
               {this.props.trends.map(community => (
                 <Menu.Item
@@ -56,15 +71,15 @@ class SidebarMenu extends React.Component {
             </div>
           </Item>
           <Item>
-            <div className='header'>Search</div>
+            <div className='header'>{ this.props.localized['Search'] }</div>
             <Input
               loading={isFetching}
               size='mini'
-              placeholder='Commuity name...'
+              placeholder={ this.props.localized['CommunityName'] }
               onChange={this.props.handleSearchChange}
             />
             <div className='menu'>
-              {searchError ? <Menu.Item>{searchError.reason}</Menu.Item> : communitySearched.map(community => (
+              {searchError ? <Menu.Item>{ this.props.localized[searchError.identifier] }</Menu.Item> : communitySearched.map(community => (
                 <Menu.Item
                   as={Link}
                   name={community.name}
@@ -78,7 +93,7 @@ class SidebarMenu extends React.Component {
             </div>
           </Item>
           <Item style={{ display: this.props.subscriptions.count() === 0 ? 'none' : 'block' }}>
-            <div className='header'>Subscriptions</div>
+            <div className='header'>{ this.props.localized['Subscriptions'] }</div>
             <div className='menu'>
               {this.props.subscriptions.toJS().map(community => (
                 <Menu.Item
@@ -94,7 +109,7 @@ class SidebarMenu extends React.Component {
             </div>
           </Item>
           <Item>
-            <Link className='header' to='/#create-community' onClick={() => this.props.openCreateCommunityModal()}>Yours <Icon name='add circle' /></Link>
+            <Link className='header' to='/#create-community' onClick={() => this.props.openCreateCommunityModal()}>{ this.props.localized['Yours'] + ' ' } <Icon name='add circle' /></Link>
             <div className='menu'>
               {this.props.myCommunities.map(c => (
                 <Menu.Item
@@ -113,7 +128,7 @@ class SidebarMenu extends React.Component {
             <Button
               icon labelPosition='right'
               style={{ width: '100%' }}
-              onClick={() => { this.props.token ? this.props.logout() : this.props.openLoginModal() }}>{this.props.token ? 'Logout' : 'Login'}<Icon name={this.props.token ? 'sign out' : 'sign in'} /></Button>
+              onClick={() => { this.props.token ? this.props.logout() : this.props.openLoginModal() }}>{this.props.token ? this.props.localized['Logout'] : this.props.localized['Login']}<Icon name={this.props.token ? 'sign out' : 'sign in'} /></Button>
           </div>
           {this.LoginModal()}
           {this.CreateCommunityModal()}

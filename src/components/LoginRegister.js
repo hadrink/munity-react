@@ -57,38 +57,38 @@ class LoginRegister extends React.Component {
         <Grid columns={2} divided verticalAlign='top'>
           <Grid.Row stretched>
             <Grid.Column>
-              <h3>Login</h3>
+              <h3>{ this.props.loginMessages['Title'] }</h3>
               <Form>
                 <Form.Input
-                  placeholder='Username'
+                  placeholder={ this.props.loginMessages['Username'] }
                   onChange={(e) => { this.inputOnChange('login', 'username', e.target.value) }}
                 />
                 <Form.Input
-                  placeholder='Password'
+                  placeholder={ this.props.loginMessages['Password'] }
                   type='password'
                   onChange={(e) => { this.inputOnChange('login', 'password', e.target.value) }} />
                 <Button
                   disabled={this.loginFormIsInvalid()}
                   loading={this.props.loading && !this.loginFormIsInvalid()}
                   type='submit'
-                  onClick={() => { this.handleLoginSubmit() }}>Submit
+                  onClick={() => { this.handleLoginSubmit() }}>{ this.props.loginMessages['Submit'] }
                 </Button>
               </Form>
             </Grid.Column>
             <Grid.Column>
-              <h3>Register</h3>
+              <h3>{ this.props.registerMessages['Title'] }</h3>
               <Form>
                 <Form.Input
-                  placeholder='Username'
+                  placeholder={ this.props.registerMessages['Username'] }
                   onChange={(e) => { this.inputOnChange('register', 'username', e.target.value) }}
                 />
                 <Form.Input
-                  placeholder='email'
+                  placeholder={ this.props.registerMessages['Email'] }
                   type='email'
                   onChange={(e) => { this.inputOnChange('register', 'email', e.target.value) }}
                 />
                 <Form.Input
-                  placeholder='Password'
+                  placeholder={ this.props.registerMessages['Password'] }
                   type='password'
                   onChange={(e) => { this.inputOnChange('register', 'password', e.target.value) }}
                 />
@@ -96,7 +96,7 @@ class LoginRegister extends React.Component {
                   disabled={this.registerFormIsInvalid()}
                   loading={this.props.isRegistering && !this.registerFormIsInvalid()}
                   type='submit'
-                  onClick={() => { this.handleRegisterSubmit() }}>Submit
+                  onClick={() => { this.handleRegisterSubmit() }}>{ this.props.registerMessages['Submit'] }
                 </Button>
               </Form>
             </Grid.Column>

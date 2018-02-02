@@ -37,6 +37,7 @@ const mapStateToProps = (state) => ({
   communityError: state.getIn(['community', 'error']),
   userError: state.getIn(['community', 'error']),
   screenType: state.getIn(['app', 'window', 'type']),
+  localized: state.get('intl')['messages']['menu'] || {},
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
